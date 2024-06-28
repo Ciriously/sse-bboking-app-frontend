@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Booking = () => {
+const PassengerDetails = () => {
     const [formData, setFormData] = useState({
         name: '',
         age: '',
@@ -39,7 +39,7 @@ const Booking = () => {
 
     return (
         <div className="max-w-3xl font-poppins mx-auto p-4">
-            <form className="bg-white shadow-md rounded-lg p-6 mb-6" onSubmit={handleSubmit}>
+            <form className="bg-white  p-2 mb-6" onSubmit={handleSubmit}>
                 <h2 className="text-2xl font-semibold mb-4">Add Passenger</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
                     <div>
@@ -115,17 +115,17 @@ const Booking = () => {
                     Add Passenger
                 </button>
             </form>
-            <div className="bg-white shadow-md rounded-lg p-6">
+            <div className="bg-white p-2">
                 <h2 className="text-2xl font-semibold mb-4">Passengers List</h2>
                 <div className="overflow-x-auto">
                     <table className="min-w-full bg-white">
                         <thead>
                             <tr>
-                                <th className="py-2 px-4 border-b text-left text-gray-700">Name</th>
-                                <th className="py-2 px-4 border-b text-left text-gray-700">Age</th>
-                                <th className="py-2 px-4 border-b text-left text-gray-700">Seat Type</th>
-                                <th className="py-2 px-4 border-b text-left text-gray-700">Gender</th>
-                                <th className="py-2 px-4 border-b text-left text-gray-700">Food Preference</th>
+                                <th className="py-2 px-4  text-left text-gray-700">Name</th>
+                                <th className="py-2 px-4  text-left text-gray-700">Age</th>
+                                <th className="py-2 px-4  text-left text-gray-700">Seat Type</th>
+                                <th className="py-2 px-4  text-left text-gray-700">Gender</th>
+                                <th className="py-2 px-4  text-left text-gray-700">Food Preference</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -146,4 +146,4 @@ const Booking = () => {
     );
 };
 
-export default Booking;
+export default PassengerDetails;

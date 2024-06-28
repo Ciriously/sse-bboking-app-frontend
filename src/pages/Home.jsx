@@ -2,6 +2,7 @@ import React from 'react';
 import ReservationCard from '../shared/Searchbar';
 import TrainCard from '../components/TrainCard';
 import Header from '../components/Header';
+import Testimonials from '../components/Testomonials';
 
 const Home = () => {
     return (
@@ -10,7 +11,7 @@ const Home = () => {
 
             {/* Header section remains the same, assuming it's already responsive */}
             <Header />
-
+            < Testimonials />
             {/* TrainCard and ReservationCard components should also be made responsive within their own definitions */}
             {/* <TrainCard /> */}
             {/* <ReservationCard />  */}

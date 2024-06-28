@@ -10,14 +10,13 @@ const Navbar = () => {
 
     // Navigation data array
     const navItems = [
-        { id: 1, title: 'Home', link: '#' },
-        { id: 2, title: 'Gallery', link: '#' },
-        { id: 3, title: 'Contact', link: '#' },
-        { id: 4, title: 'About', link: '#' }
+        { id: 1, title: 'Home', link: '/' },
+        { id: 2, title: 'Contact', link: '#' },
+        { id: 3, title: 'About', link: '#' }
     ];
 
     return (
-        <header className="sticky  font-poppins top-0 z-50 bg-white/80 backdrop-blur-lg">
+        <header className="sticky font-poppins top-0 z-50 bg-white/80 backdrop-blur-lg">
             <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-12 py-4">
                 <div className="flex items-center space-x-8">
                     <Link to="/" className="flex items-center space-x-2">
@@ -49,7 +48,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                         to="/signup"
-                        className="rounded-md bg-gradient-to-br from-green-600 to-emerald-400 px-3 py-1.5 font-dm text-lg font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]"
+                        className="rounded-md bg-gradient-to-br from-red-600 to-rose-400 px-3 py-1.5 font-dm text-lg font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]"
                     >
                         Signup
                     </Link>
@@ -80,7 +79,7 @@ const Navbar = () => {
             {/* Mobile Menu */}
             {isOpen && (
                 <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md">
-                    <ul className="flex flex-co items-center py-4">
+                    <ul className="flex flex-col items-center py-4">
                         {navItems.map(item => (
                             <li key={item.id} className="py-2 text-2xl font-medium text-slate-700">
                                 <a href={item.link}>{item.title}</a>
@@ -96,7 +95,7 @@ const Navbar = () => {
                         </Link>
                         <Link
                             to="/signup"
-                            className="rounded-md bg-gradient-to-br from-green-600 to-emerald-400 px-4 py-2 font-dm text-lg font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]"
+                            className="rounded-md bg-gradient-to-br from-red-600 to-rose-400 px-4 py-2 font-dm text-lg font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]"
                         >
                             Signup
                         </Link>

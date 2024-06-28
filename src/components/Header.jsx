@@ -22,7 +22,7 @@ const Header = () => {
                 </div>
 
                 <h1 className="text-3xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-white mt-8 sm:mt-12 md:mt-16 lg:mt-20">
-                    Welcome to Indian Railways
+                    Welcome to <span className='bg-gradient-to-r from-yellow-500 via-slate-100 to-emerald-800 bg-clip-text text-transparent'>Indian</span> Railways
                 </h1>
 
             </header>

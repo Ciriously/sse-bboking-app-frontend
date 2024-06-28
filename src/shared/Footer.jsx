@@ -4,42 +4,42 @@ const footerLinks = [
     {
         category: 'Support',
         links: [
-            { text: 'Help Center', url: 'https://journey-support.vercel.app' },
-            { text: 'Get help with a safety issue', url: 'https://journey-support.vercel.app' },
-            { text: 'MotelCover', url: 'https://journey-support.vercel.app' },
-            { text: 'Supporting people with disabilities', url: 'https://journey-support.vercel.app' },
-            { text: 'Cancelation options', url: 'https://journey-support.vercel.app' },
-            { text: 'Our Covid-19 response', url: 'https://covid19-sg.netlify.app' },
-            { text: 'Report a neighborhood concern', url: 'https://journey-support.vercel.app' },
+            { text: 'Help Center', url: 'https://rail-yatra-support.vercel.app' },
+            { text: 'Get help with a safety issue', url: 'https://rail-yatra-support.vercel.app' },
+            { text: 'RailYatra Cover', url: 'https://rail-yatra-support.vercel.app' },
+            { text: 'Supporting people with disabilities', url: 'https://rail-yatra-support.vercel.app' },
+            { text: 'Cancellation options', url: 'https://rail-yatra-support.vercel.app' },
+            { text: 'Our Covid-19 response', url: 'https://covid19-rail-yatra.netlify.app' },
+            { text: 'Report a neighborhood concern', url: 'https://rail-yatra-support.vercel.app' },
         ]
     },
     {
         category: 'Community',
         links: [
-            { text: 'Motel.org: Disaster relief housing', url: 'https://journey-support.vercel.app' },
-            { text: 'Combating discrimination', url: 'https://journey-support.vercel.app' },
+            { text: 'RailYatra.org: Disaster relief housing', url: 'https://rail-yatra-support.vercel.app' },
+            { text: 'Combating discrimination', url: 'https://rail-yatra-support.vercel.app' },
         ]
     },
     {
         category: 'Hosting',
         links: [
-            { text: 'Motel your home', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
-            { text: 'MotelCover for Hosts', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
-            { text: 'Explore hosting resources', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
-            { text: 'Visit our community forum', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
-            { text: 'How to host responsibly', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
-            { text: 'Motel friendly apartments', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
+            { text: 'Host your home on RailYatra', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
+            { text: 'RailYatra Cover for Hosts', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
+            { text: 'Explore hosting resources', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
+            { text: 'Visit our community forum', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
+            { text: 'How to host responsibly', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
+            { text: 'RailYatra friendly apartments', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
         ]
     },
     {
-        category: 'Motel',
+        category: 'RailYatra',
         links: [
-            { text: 'Newsroom', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
-            { text: 'MotelCover for Hosts', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
-            { text: 'Explore hosting resources', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
-            { text: 'Visit our community forum', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
-            { text: 'How to host responsibly', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
-            { text: 'Motel friendly apartments', url: 'https://journey-cusine-git-master-skmirajulislams-projects.vercel.app/host/homes' },
+            { text: 'Newsroom', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
+            { text: 'RailYatra Cover for Hosts', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
+            { text: 'Explore hosting resources', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
+            { text: 'Visit our community forum', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
+            { text: 'How to host responsibly', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
+            { text: 'RailYatra friendly apartments', url: 'https://rail-yatra-hosting.vercel.app/host/homes' },
         ]
     },
 ];
