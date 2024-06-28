@@ -11,8 +11,8 @@ const Navbar = () => {
     // Navigation data array
     const navItems = [
         { id: 1, title: 'Home', link: '/' },
-        { id: 2, title: 'Contact', link: '#' },
-        { id: 3, title: 'About', link: '#' }
+        { id: 2, title: 'About', link: '#' },
+        { id: 3, title: 'Book a Ticket', link: '/Bookinglist' }
     ];
 
     return (
