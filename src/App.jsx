@@ -10,6 +10,7 @@ import Footer from './shared/Footer';
 import Booking from './pages/Booking';
 import Bookinglist from './pages/Bookinglist';
 import Summary from './pages/Summary';
+import AdminPage from './pages/admin/Admin';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/booking" element={<Booking />} />
           < Route path="/Bookinglist" element={<Bookinglist />} />
           < Route path="/Summary" element={<Summary />} />
+          < Route path="/Admin" element={<AdminPage />} />
         </Routes>
         <Footer />
         <ToastContainer />

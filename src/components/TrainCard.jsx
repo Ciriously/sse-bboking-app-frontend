@@ -5,6 +5,8 @@ const trainData = [
     {
         name: 'Express 1',
         timings: '10:00 AM - 10:00 PM',
+        from: 'Delhi',
+        to: 'Mumbai',
         classes: [
             { type: '3A', seats: 100, price: '₹1500' },
             { type: '2A', seats: 80, price: '₹1000' },
@@ -15,6 +17,8 @@ const trainData = [
     {
         name: 'Express 2',
         timings: '08:00 AM - 08:00 PM',
+        from: 'Bangalore',
+        to: 'Chennai',
         classes: [
             { type: '3A', seats: 80, price: '₹1400' },
             { type: '2A', seats: 25, price: '₹900' },
@@ -25,6 +29,8 @@ const trainData = [
     {
         name: 'Express 3',
         timings: '09:00 AM - 09:00 PM',
+        from: 'Kolkata',
+        to: 'Delhi',
         classes: [
             { type: '3A', seats: 45, price: '₹1600' },
             { type: '2A', seats: 120, price: '₹1100' },
@@ -63,6 +69,7 @@ const TrainCard = () => {
                         <p className={`text-lg ${train.availability.includes('High') ? 'text-green-500' : 'text-yellow-500'}`}>
                             {train.availability}
                         </p>
+                        <p className="text-md font-poppins text-gray-600">From: {train.from} - To: {train.to}</p>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
                         {train.classes.map((cls, idx) => (
@@ -74,7 +81,7 @@ const TrainCard = () => {
                         ))}
                     </div>
                     <button
-                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300"
+                        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition duration-300"
                         onClick={() => handleClick('/booking')}
                     >
                         Book Now

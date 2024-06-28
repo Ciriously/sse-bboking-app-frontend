@@ -24,16 +24,16 @@ const Booking = () => {
     };
 
     return (
-        <div className='px-6 bg-slate-100 min-h-screen flex flex-col items-center justify-center'>
+        <div className="px-6 bg-slate-100 min-h-screen flex flex-col items-center justify-center">
             <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md w-full">
                 <PassengerDetails />
             </div>
             <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md w-full">
-                < CouponComponent />
-
+                <CouponComponent />
             </div>
 
             <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md w-full">
+
                 <h2 className="text-2xl font-bold mb-4">IRCTC Account Details</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
@@ -56,11 +56,26 @@ const Booking = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="w-full py-2 px-4 border border-transparent mb-10 rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         Submit
                     </button>
                 </form>
+
+            </div>
+            <div className="max-w-4xl  font-poppins mx-auto mt-10 mb-8 p-6 bg-white rounded-lg shadow-md w-full">
+                <div className="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 className="text-2xl font-bold">Amount:<span className='text-red-500'>₹ 1530 </span> / person</h2>
+                        <p className="text-gray-600">Final amount will be calculated at payment</p>
+                    </div>
+                    <a href="/Summary"
+                        className="bg-red-500 text-white py-4 px-8 rounded-lg"
+                    // onClick={() => console.log('Proceed clicked')}
+                    >
+                        Proceed
+                    </a>
+                </div>
             </div>
         </div>
     );

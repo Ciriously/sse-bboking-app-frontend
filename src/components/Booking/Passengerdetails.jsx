@@ -14,6 +14,13 @@ const PassengerDetails = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        // Handle specific validations
+        if (name === 'age' && parseInt(value) < 0) {
+            toast.error('Age cannot be negative');
+            return;
+        }
+
         setFormData({
             ...formData,
             [name]: value
@@ -22,6 +29,18 @@ const PassengerDetails = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Validate age for children under 4 years
+        if (parseInt(formData.age) < 0) {
+            toast.error('Age cannot be negative');
+            return;
+        }
+
+        if (parseInt(formData.age) < 4) {
+            // Handle free travel for children under 4
+            toast.warning('Children under 4 travel free and won\'t be allocated a seat');
+        }
+
         if (passengers.length < 6) {
             setPassengers([...passengers, formData]);
             setFormData({
@@ -110,7 +129,7 @@ const PassengerDetails = () => {
                 </div>
                 <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     Add Passenger
                 </button>
