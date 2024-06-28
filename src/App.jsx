@@ -9,6 +9,7 @@ import Signup from './pages/auth/Signup';
 import Footer from './shared/Footer';
 import Booking from './pages/Booking';
 import Bookinglist from './pages/Bookinglist';
+import Summary from './pages/Summary';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/booking" element={<Booking />} />
           < Route path="/Bookinglist" element={<Bookinglist />} />
+          < Route path="/Summary" element={<Summary />} />
         </Routes>
         <Footer />
         <ToastContainer />
