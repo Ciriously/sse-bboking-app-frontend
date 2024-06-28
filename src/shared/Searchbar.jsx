@@ -104,16 +104,16 @@ const ReservationCard = ({ listingData }) => {
     };
 
     return (
-        <div className="container mx-auto p-4">
-            <div className="w-full min-h-[315px] rounded-xl border border-[#dddddd] sticky top-32 shadow-customShadow p-6 flex flex-col">
-                <div className="flex flex-col md:flex-row justify-between items-start">
-                    <div className="flex flex-col">
-                        <h3 className="text-[22px] text-[#222222] font-semibold">
-                            ₹{reservationBasePrice}
+        <>
+            <div className=" w-full min-h-[315px] rounded-xl border border-[#dddddd] sticky top-32 shadow-customShadow p-6">
+                <div className=" flex felx-row justify-between items-start">
+                    <div className=" flex flex-col">
+                        <h3 className=" text-[22px] text-[#222222] font-semibold">
+                            {/* ${listingData?.basePrice} */}₹{reservationBasePrice}
                         </h3>
-                        <p className="text-[#313131] text-sm">Total before taxes</p>
+                        <p className=" text-[#313131] text-sm">Total before taxes</p>
                     </div>
-                    <span className="text-sm text-[#222222] flex flex-row gap-1 items-center mt-2">
+                    <span className=" text-sm text-[#222222] flex flex-row gap-1 items-center mt-2">
                         <AiFillStar size={18} />
                         {listingData?.ratings ? listingData?.ratings : "New"}
                         {listingData?.reviews && (
@@ -124,33 +124,34 @@ const ReservationCard = ({ listingData }) => {
                         )}
                     </span>
                 </div>
-
-                {/* Calendar section */}
+                {/* calendar section */}
                 {!calendarState && (
-                    <div className="rounded-tl-lg rounded-tr-lg border border-[#b9b9b9] w-full min-h-[60px] mt-6 relative flex flex-col">
-                        <div
-                            onClick={() => {
-                                setCalendarState(true);
-                            }}
-                            className="grid grid-cols-2 cursor-pointer"
-                        >
-                            <div className="px-3 py-3">
-                                <p className="text-[10px] text-black font-semibold uppercase">
-                                    Check-in
-                                </p>
-                                <p className="text-sm text-[#222222]">{localStartDate}</p>
-                            </div>
-                            <div className="px-3 py-3 border-l border-[#b9b9b9]">
-                                <p className="text-[10px] text-black font-semibold uppercase">
-                                    Checkout
-                                </p>
-                                <p className="text-sm text-[#222222]">{localEndDate}</p>
+                    <div className=" rounded-tl-lg rounded-tr-lg border border-[#b9b9b9] w-full min-h-[60px] mt-6 relative flex flex-col">
+                        {/* dates & calendar & guests here */}
+                        <div>
+                            <div
+                                onClick={() => {
+                                    setCalendarState(true);
+                                }}
+                                className=" grid grid-cols-2 cursor-pointer"
+                            >
+                                <div className="px-3 py-3">
+                                    <p className=" text-[10px] text-black font-semibold uppercase">
+                                        check-in
+                                    </p>
+                                    <p className=" text-sm text-[#222222]">{localStartDate}</p>
+                                </div>
+                                <div className="px-3 py-3 border-l border-[#b9b9b9]">
+                                    <p className=" text-[10px] text-black font-semibold uppercase">
+                                        checkout
+                                    </p>
+                                    <p className=" text-sm text-[#222222]">{localEndDate}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 )}
-
-                {/* Guest selection */}
+                {/* guest selection */}
                 {!calendarState && (
                     <div
                         ref={dropdownRef}
@@ -158,13 +159,14 @@ const ReservationCard = ({ listingData }) => {
                             setShowDropdown((prev) => !prev);
                         }}
                     >
-                        <div className="rounded-bl-lg rounded-br-lg border border-[#b9b9b9] w-full min-h-[50px] cursor-pointer relative">
+                        <div className=" rounded-bl-lg rounded-br-lg border border-[#b9b9b9] w-full min-h-[50px] cursor-pointer relative">
+                            {/* guests data */}
                             <div className="px-3 py-3 flex flex-row items-center justify-between">
-                                <div className="flex flex-col">
-                                    <p className="text-[10px] text-black font-semibold uppercase">
-                                        Guests
+                                <div className=" flex flex-col">
+                                    <p className=" text-[10px] text-black font-semibold uppercase">
+                                        guests
                                     </p>
-                                    <p className="text-sm text-[#222222]">
+                                    <p className=" text-sm text-[#222222]">
                                         {totalGuest} {totalGuest === 1 ? "guest" : "guests"}
                                     </p>
                                 </div>
@@ -179,32 +181,33 @@ const ReservationCard = ({ listingData }) => {
                         </div>
                     </div>
                 )}
-
-                {/* Guests data dropdown */}
+                {/* guests data dropdown */}
                 {showDropdown && (
                     <div
                         ref={dropdownRef}
                         className="min-h-[200px] w-72 shadow-lg border absolute z-[90] bg-white px-4 py-5 rounded-md"
                     >
-                        <div className="flex flex-col gap-5">
-                            <div className="flex flex-row items-center justify-between">
+                        <div className=" flex flex-col gap-5">
+                            <div className=" flex felx-row items-center justify-between">
+                                {/* adults number here */}
                                 <span>
-                                    <p className="text-base text-[#222222] font-medium">
+                                    <p className=" text-base text-[#222222] font-medium">
                                         Adults
                                     </p>
-                                    <p className="text-sm text-[#313131]">Age 13+</p>
+                                    <p className=" text-sm text-[#313131]">Age 13+</p>
                                 </span>
-                                <span className="flex flex-row-reverse items-center gap-2">
+                                {/* icons */}
+                                <span className=" flex flex-row-reverse items-center gap-2">
                                     <button
                                         onClick={() => {
                                             setGuestsNumber((prev) => prev + 1);
                                         }}
                                         disabled={listingData?.floorPlan?.guests === totalGuest}
-                                        className="p-2 rounded-full border border-[#c0c0c0] opacity-90 disabled:cursor-not-allowed disabled:opacity-20"
+                                        className={` p-2 rounded-full border border-[#c0c0c0] opacity-90 disabled:cursor-not-allowed disabled:opacity-20`}
                                     >
                                         <AiOutlinePlus size={16} />
                                     </button>
-                                    <p className="w-[30px] flex justify-center">
+                                    <p className=" w-[30px] flex justify-center">
                                         {guestsNumber}
                                     </p>
                                     <button
@@ -212,30 +215,32 @@ const ReservationCard = ({ listingData }) => {
                                             setGuestsNumber((prev) => prev - 1);
                                         }}
                                         disabled={guestsNumber === 1}
-                                        className="p-2 rounded-full border border-[#c0c0c0] disabled:cursor-not-allowed disabled:opacity-20"
+                                        className=" p-2 rounded-full border border-[#c0c0c0] disabled:cursor-not-allowed disabled:opacity-20"
                                     >
                                         <AiOutlineMinus size={16} />
                                     </button>
                                 </span>
                             </div>
-                            <div className="flex flex-row items-center justify-between">
+                            <div className=" flex felx-row items-center justify-between">
+                                {/* children number here */}
                                 <span>
-                                    <p className="text-base text-[#222222] font-medium">
+                                    <p className=" text-base text-[#222222] font-medium">
                                         Children
                                     </p>
-                                    <p className="text-sm text-[#313131]">Ages 2-12</p>
+                                    <p className=" text-sm text-[#313131]">Ages 2-12</p>
                                 </span>
-                                <span className="flex flex-row-reverse items-center gap-2">
+                                {/* icons */}
+                                <span className=" flex flex-row-reverse items-center gap-2">
                                     <button
                                         onClick={() => {
                                             setChildrenNumber((prev) => prev + 1);
                                         }}
                                         disabled={listingData?.floorPlan?.guests === totalGuest}
-                                        className="p-2 rounded-full border border-[#c0c0c0] opacity-90 disabled:cursor-not-allowed disabled:opacity-20"
+                                        className=" p-2 rounded-full border border-[#c0c0c0] opacity-90 disabled:cursor-not-allowed disabled:opacity-20"
                                     >
                                         <AiOutlinePlus size={16} />
                                     </button>
-                                    <p className="w-[30px] flex justify-center">
+                                    <p className=" w-[30px] flex justify-center">
                                         {childrenNumber}
                                     </p>
                                     <button
@@ -243,14 +248,15 @@ const ReservationCard = ({ listingData }) => {
                                             setChildrenNumber((prev) => prev - 1);
                                         }}
                                         disabled={childrenNumber === 0}
-                                        className="p-2 rounded-full border border-[#c0c0c0] disabled:cursor-not-allowed disabled:opacity-20"
+                                        className=" p-2 rounded-full border border-[#c0c0c0] disabled:cursor-not-allowed disabled:opacity-20"
                                     >
                                         <AiOutlineMinus size={16} />
                                     </button>
                                 </span>
                             </div>
                         </div>
-                        <div className="flex justify-end absolute bottom-3 right-2">
+                        {/* close btn */}
+                        <div className=" flex justify-end absolute bottom-3 right-2">
                             <button
                                 onClick={() => {
                                     setShowDropdown(false);
@@ -263,49 +269,47 @@ const ReservationCard = ({ listingData }) => {
                     </div>
                 )}
 
-                <div className="w-full mt-2 flex justify-between">
+                <div className="w-full mt-2 flex font-poppins justify-between">
                     <div className="text-[#222222] text-md font-regular">Total Price:</div>
                     <div className="text-[#222222] text-md font-bold">₹1916</div>
                 </div>
-
                 <div className="relative group">
                     <div className="flex items-center">
-                        <span className="text-gray-500 text-xs cursor-pointer">Including taxes and fees</span>
+                        <span className="text-gray-500 text-xs font-inter cursor-pointer">Including taxes and fees</span>
                         <IoIosInformationCircleOutline className="info-icon text-gray-500 ml-2" />
                     </div>
-                    <div className="absolute z-20 shadow-md top-full left-0 mt-2 w-full bg-white p-2 rounded text-sm hidden group-hover:block">
-                        <div className="card rounded p-4">
+                    <div className="absolute z-20 shadow-md top-full left-0 mt-2 w-full bg-white  p-2 rounded text-sm hidden group-hover:block">
+                        <div className="card   rounded p-4">
                             <h2 className="text-[#222222] text-xl font-bold mb-4">Taxes & fees</h2>
-                            <div className="w-full mt-2 flex justify-between">
+
+                            <div className="w-full mt-2 flex font-poppins justify-between">
                                 <div className="text-[#222222] text-md font-regular">Total taxes & fees</div>
-                                <div className="text-[#222222] text-md font-bold">₹116</div>
+                                <div className="text-[#222222] text-md  font-bold">₹116</div>
                             </div>
-                            <p className="text-[#222222] text-xs mt-4">
-                                Disclaimer text goes here Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                Nulla quo neque harum tempora numquam libero minus, accusantium aut, ipsum, beatae
-                                facilis vitae non!
-                            </p>
+
+                            <p className="text-[#222222] text-xs font-regular mt-4">Disclaimer text goes here Lorem ipsum dolor sit amet consectetur adipisicing elit.nulla quo neque harum tempora numquam libero minus, accusantium aut, ipsum, beatae facilis vitae non!</p>
                         </div>
                     </div>
                 </div>
-
-                {/* Reservation button */}
+                {/* reservation button */}
                 {!showDropdown && !calendarState && (
-                    <div className="mt-4 flex justify-center rounded-md">
+                    <div className=" mt-4 flex justify-center rounded-md">
+
                         <button
-                            onClick={handleBooking}
+                            onClick={() => {
+                                handleBooking();
+                            }}
                             className="capitalize py-3 w-full bg-[#B01432] hover:bg-[#d90b63] transition duration-200 ease-in text-white font-medium text-sm rounded-md"
                         >
-                            Reserve
+                            reserve
                         </button>
                     </div>
                 )}
-
-                {/* Calendar & date picker */}
+                {/* calendar & date picker */}
                 {!calendarState ? null : (
                     <div
                         ref={calendarRef}
-                        className="absolute border-b-[1.2px] border-neutral-200 shadow-md left-[2px] sm:translate-x-[30%] sm:translate-y-[0%] md:translate-x-[-30%] lg:translate-x-[-20%] xl:translate-x-0 xl:translate-y-0"
+                        className=" absolute border-b-[1.2px] border-neutral-200 shadow-md left-[2px] sm:translate-x-[30%] sm:translate-y-[0%] md:translate-x-[-30%] lg:translate-x-[-20%] xl:translate-x-0 xl:translate-y-0"
                     >
                         <DateRange
                             rangeColors={["#262626"]}
@@ -320,9 +324,8 @@ const ReservationCard = ({ listingData }) => {
                         />
                     </div>
                 )}
-
                 <div className="relative group mt-2 inline-block">
-                    <span className="text-red-400 text-sm font-medium cursor-pointer">Cancel policy</span>
+                    <span className="text-red-400 text-sm font-medium font-inter cursor-pointer">Cancel policy</span>
                     <IoIosInformationCircleOutline className="info-icon text-red-500 ml-2 inline-block" />
                     <div className="absolute top-0 right-full mt-4 w-[25rem] bg-white border p-6 rounded shadow-lg text-sm hidden group-hover:block">
                         <h4 className="font-bold text-xl mb-1">Cancellation Policy</h4>
@@ -332,13 +335,12 @@ const ReservationCard = ({ listingData }) => {
                         </ul>
                     </div>
                 </div>
+                <div className="text-sm mt-3 text-red-500 font-inter">Follow safety measures advised at the hotel</div>
+                <div className="text-sm mt-3 text-gray-400 font-inter">By Proceeding You Agree to Our <span className="font-inter text-red-600">Guest Policies </span></div>
 
-                <div className="text-sm mt-3 text-red-500">Follow safety measures advised at the hotel</div>
-                <div className="text-sm mt-3 text-gray-400">
-                    By Proceeding You Agree to Our <span className="text-red-600">Guest Policies</span>
-                </div>
             </div>
-        </div>
+
+        </>
     );
 };
 

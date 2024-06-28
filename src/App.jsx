@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './shared/Navbar';
 import Home from './pages/Home';
 import Signin from './pages/auth/Signin';
@@ -16,9 +18,10 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
-          < Route path="/booking" element={<Booking />} />
+          <Route path="/booking" element={<Booking />} />
         </Routes>
         <Footer />
+        <ToastContainer />
       </div>
     </BrowserRouter>
   );

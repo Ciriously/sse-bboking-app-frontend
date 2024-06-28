@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const TrainBookingForm = () => {
+const Booking = () => {
     const [formData, setFormData] = useState({
         name: '',
         age: '',
@@ -29,13 +31,14 @@ const TrainBookingForm = () => {
                 gender: 'Male',
                 foodPreference: 'Veg'
             });
+            toast.success('Passenger added successfully!');
         } else {
-            alert('You can only add up to 6 passengers');
+            toast.error('You can only add up to 6 passengers');
         }
     };
 
     return (
-        <div className="max-w-3xl mx-auto p-4">
+        <div className="max-w-3xl font-poppins mx-auto p-4">
             <form className="bg-white shadow-md rounded-lg p-6 mb-6" onSubmit={handleSubmit}>
                 <h2 className="text-2xl font-semibold mb-4">Add Passenger</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
@@ -143,4 +146,4 @@ const TrainBookingForm = () => {
     );
 };
 
-export default TrainBookingForm;
+export default Booking;
