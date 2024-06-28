@@ -1,4 +1,6 @@
 import React from 'react'
+import ReservationCard from '../shared/Searchbar'
+import TrainCard from '../components/TrainCard'
 
 const Home = () => {
     return (
@@ -16,6 +18,8 @@ const Home = () => {
                     </p>
                 </header>
             </div>
+            < TrainCard />
+            {/* <ReservationCard /> */}
         </div>
     )
 }
