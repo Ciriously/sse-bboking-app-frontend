@@ -4,7 +4,6 @@ import Navbar from './shared/Navbar';
 import Home from './pages/Home';
 import Signin from './pages/auth/Signin';
 import Signup from './pages/auth/Signup';
-// Step 1: Import SignIn and SignUp components
 
 const App = () => {
   return (
