@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode'; // Corrected import
 
 const Signin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const validateForm = () => {
@@ -26,40 +27,40 @@ const Signin = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            console.log('Form submitted', { email, password });
-        }
-    };
-    const handleSignin = async () => {
-        try {
-            const response = await fetch('http://localhost:4000/loginUser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+            try {
+                setLoading(true);
+                const response = await fetch('http://localhost:4000/loginUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
 
-            const data = await response.json();
-            if (response.ok) {
-
-                localStorage.setItem('token', data.token);
-                const user = jwtDecode(data.token);
-                if (user.role === 'admin') {
-                    navigate('/admin');
+                const data = await response.json();
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    const user = jwtDecode(data.token);
+                    if (user.role === 'admin') {
+                        navigate('/admin');
+                    } else {
+                        navigate('/');
+                    }
                 } else {
-                    console.log('first')
-                    navigate('/');
+                    throw new Error(data.error || 'An error occurred during login');
                 }
-            } else {
-                throw new Error(data.error || 'An error occurred during login');
+            } catch (error) {
+                console.error('Login error:', error.message);
+                setErrors({ form: error.message });
+            } finally {
+                setLoading(false);
             }
-        } catch (error) {
-            console.error('Login error:', error.message);
         }
     };
+
     return (
         <div>
             <main className="min-h-screen font-poppins flex items-center justify-center p-8 md:p-0">
@@ -104,9 +105,12 @@ const Signin = () => {
                                     <span className="text-red-500 text-sm mt-2">{errors.password}</span>
                                 )}
                             </div>
-                            <button onClick={handleSignin} className="my-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg px-4 py-2 rounded-md">
-                                Sign In
+                            <button type="submit" className="my-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg px-4 py-2 rounded-md">
+                                {loading ? 'Signing In...' : 'Sign In'}
                             </button>
+                            {errors.form && (
+                                <span className="text-red-500 text-sm mt-2">{errors.form}</span>
+                            )}
                         </form>
                         <p className="text-gray-500">
                             Don't have an account?{" "}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -145,6 +145,8 @@ const PassengerDetails = () => {
     }, [passengers, trainDetails]);
     return (
         <div className="max-w-3xl font-poppins mx-auto p-4">
+            <ToastContainer />
+
             <form className="bg-white  p-2 mb-6" onSubmit={handleSubmit}>
                 <h2 className="text-2xl font-semibold mb-4">Add Passenger</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">

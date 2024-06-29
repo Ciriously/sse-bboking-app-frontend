@@ -20,6 +20,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <div>
+        <ToastContainer />
+
         <DiscountBanner />
         <Navbar />
         <Routes>
@@ -37,7 +39,6 @@ const App = () => {
           <Route path="/history" element={<UserHistory />} />
         </Routes>
         <Footer />
-        <ToastContainer />
       </div>
     </BrowserRouter>
   );

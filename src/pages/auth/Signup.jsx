@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'; // Import toast
 
 const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
-    const navigate = useNavigate(); // Use useNavigate hook
+    const navigate = useNavigate();
 
     const validateForm = () => {
         const newErrors = {};
@@ -33,10 +34,10 @@ const Signup = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateForm()) {
-            // Submit form logic here
-            console.log('Form submitted', { email, password });
+            handleRegister();
         }
     };
+
     const handleRegister = async () => {
         const userData = { email, password, role: 'user' }; // Default role is 'user'
         try {
@@ -54,13 +55,19 @@ const Signup = () => {
 
             const user = await response.json();
             console.log('User created successfully', user);
-            navigate('/')
-            // Handle success (e.g., redirect to login or dashboard)
+
+            // Show success toast notification
+            toast.success('Please sign in now');
+
+            // Navigate to the sign-in page
+            navigate('/signin');
         } catch (error) {
             console.error('Error creating user:', error);
-            // Handle error (e.g., show error message)
+            // Show error toast notification
+            toast.error('Failed to create user. Please try again.');
         }
     };
+
     return (
         <div>
             <main className="min-h-screen font-poppins flex items-center justify-center p-8 md:p-0">
@@ -122,12 +129,15 @@ const Signup = () => {
                                     <span className="text-red-500 text-sm mt-2">{errors.confirmPassword}</span>
                                 )}
                             </div>
-                            <button onClick={handleRegister} className="my-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg px-4 py-2 rounded-md">
+                            <button
+                                type="submit"
+                                className="my-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg px-4 py-2 rounded-md"
+                            >
                                 Sign Up
                             </button>
                         </form>
                         <p className="text-gray-500">
-                            Already have an account?{" "}
+                            Already have an account?{' '}
                             <a href="/signin" className="text-blue-500 font-semibold underline">
                                 Sign in
                             </a>
