@@ -11,8 +11,7 @@ const Bookinglist = () => {
         <div className=''>
             <Searchbar />
             <FilterCatalog setFilteredTrains={setFilteredTrains} />
-            <TrainCard trainData={filteredTrains} />
-        </div>
+            <TrainCard filteredTrains={filteredTrains} />        </div>
     );
 };
 

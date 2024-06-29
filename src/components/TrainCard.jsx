@@ -4,28 +4,29 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useAuthStatus from '../hooks/useAuthStatus';
 
-const TrainCard = () => {
+const TrainCard = ({ filteredTrains }) => {
     const navigate = useNavigate();
     const [trains, setTrains] = useState([]);
     const isLoggedIn = useAuthStatus();
 
     useEffect(() => {
-        const fetchTrains = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/admin/getAllTrains');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch trains');
+        if (!filteredTrains) {
+            const fetchTrains = async () => {
+                try {
+                    const response = await fetch('http://localhost:4000/admin/getAllTrains');
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch trains');
+                    }
+                    const trainsData = await response.json();
+                    setTrains(trainsData);
+                } catch (error) {
+                    console.error('Error fetching trains:', error.message);
                 }
-                const trainsData = await response.json();
-                setTrains(trainsData);
-            } catch (error) {
-                console.error('Error fetching trains:', error.message);
-                // Handle error (e.g., show error message, retry logic)
-            }
-        };
+            };
 
-        fetchTrains();
-    }, []); // Empty dependency array ensures this effect runs only once on component mount
+            fetchTrains();
+        }
+    }, [filteredTrains]);
 
     const determineBackgroundColor = (seats) => {
         if (seats > 80) {
@@ -44,11 +45,11 @@ const TrainCard = () => {
             navigate(`/booking/${trainId}`);
         }
     };
-
+    const displayTrains = filteredTrains && filteredTrains.length > 0 ? filteredTrains : trains;
     return (
         <div className="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
             <ToastContainer />
-            {trains.map((train, index) => (
+            {displayTrains.map((train, index) => (
                 <div key={index} className="mb-4 p-4 border-b border-gray-200">
                     <div className="flex justify-between items-center">
                         <h2 className="font-bold text-2xl text-gray-800">{train.name}</h2>
@@ -58,7 +59,7 @@ const TrainCard = () => {
                         <p className="text-md font-poppins text-gray-600">From: {train.source} - To: {train.destination}</p>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-                        {Object.entries(train.seats).map(([classType, { price, count }], idx) => (
+                        {Object.entries(train.seats || {}).map(([classType, { price, count }], idx) => (
                             <div key={idx} className={`rounded-lg p-4 border border-gray-200 ${determineBackgroundColor(count)}`}>
                                 <p className="text-lg font-bold text-gray-800">{classType.toUpperCase()}</p>
                                 <p className="text-sm text-gray-600">Seats: {count}</p>
@@ -79,3 +80,5 @@ const TrainCard = () => {
 };
 
 export default TrainCard;
+
+

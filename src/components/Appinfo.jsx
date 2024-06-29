@@ -10,7 +10,7 @@ const AppInfo = () => {
                 <div className="h-[64px] w-[3px] bg-gray-800 absolute -end-[17px] top-[142px] rounded-e-lg" />
                 <div className="rounded-[2rem] overflow-hidden w-[252px] h-[552px] md:w-[302px] md:h-[652px] bg-white">
                     <img
-                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-1-light.png"
+                        src="/assets/mock.jpg"
                         className="w-[252px] h-[552px] md:w-[302px] md:h-[652px] shadow-xl"
                         alt="RailYatra Mockup"
                     />

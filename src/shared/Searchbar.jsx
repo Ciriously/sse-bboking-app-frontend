@@ -4,6 +4,7 @@ const Searchbar = () => {
     const [trains, setTrains] = useState([]); // State to store all trains
     const [searchQuery, setSearchQuery] = useState(''); // State to store the search query
     const [filteredTrains, setFilteredTrains] = useState([]); // State to store the filtered trains
+    const [showNoResults, setShowNoResults] = useState(false); // State to control display of no results message
 
     // Fetch all trains when the component mounts
     useEffect(() => {
@@ -26,11 +27,15 @@ const Searchbar = () => {
 
     // Update filtered trains based on search query
     useEffect(() => {
-        if (searchQuery) {
-            const filtered = trains.filter(train => train.name.toLowerCase().includes(searchQuery.toLowerCase()));
+        if (searchQuery.trim() !== '') {
+            const filtered = trains.filter(train =>
+                train.name.toLowerCase().includes(searchQuery.toLowerCase())
+            );
             setFilteredTrains(filtered);
+            setShowNoResults(filtered.length === 0);
         } else {
             setFilteredTrains([]);
+            setShowNoResults(false);
         }
     }, [searchQuery, trains]);
 
@@ -67,12 +72,23 @@ const Searchbar = () => {
                     </label>
                 </form>
                 {/* Display search results */}
-                <div>
-                    {filteredTrains.map(train => (
-                        <div key={train._id} className="mt-4">
-                            <p>{train.name} - {train.source} to {train.destination}</p>
+                <div className="mt-8">
+                    {filteredTrains.length > 0 && (
+                        <div className="space-y-4">
+                            {filteredTrains.map(train => (
+                                <div key={train._id} className="bg-slate-50 shadow-md p-4 rounded-lg">
+                                    <h3 className="text-xl font-semibold mb-2">{train.name}</h3>
+                                    <p className="text-lg text-gray-800">
+                                        {train.source} to {train.destination}
+                                    </p>
+                                    {/* Add more details as needed */}
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
+                    {showNoResults && (
+                        <p className="text-lg text-gray-600 mt-4">No results found.</p>
+                    )}
                 </div>
             </div>
         </div>

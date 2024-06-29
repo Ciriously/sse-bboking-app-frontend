@@ -19,7 +19,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        window.location.reload(); // Reload the page to reflect the logout state
+        window.location.reload();
     };
 
     return (

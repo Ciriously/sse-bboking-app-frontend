@@ -2,54 +2,86 @@ import React, { useState } from 'react';
 import { trainData } from './traindata';
 
 const FilterCatalog = ({ setFilteredTrains }) => {
-    const [selectedLocation, setSelectedLocation] = useState('');
+    const [selectedSource, setSelectedSource] = useState('');
+    const [selectedDestination, setSelectedDestination] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
+    const [trains, setTrains] = useState([]);
 
-    const handleLocationFilter = (location) => {
-        setSelectedLocation(location);
-        filterTrains(location, selectedDate);
+    const handleSourceFilter = (source) => {
+        setSelectedSource(source);
+    };
+
+    const handleDestinationFilter = (destination) => {
+        setSelectedDestination(destination);
     };
 
     const handleDateFilter = (date) => {
         setSelectedDate(date);
-        filterTrains(selectedLocation, date);
     };
 
-    const filterTrains = (location, date) => {
-        let filteredTrains = trainData;
+    const ApplyFilter = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/admin/getTrainByFilter?' + new URLSearchParams({
+                source: selectedSource,
+                destination: selectedDestination,
+                date: selectedDate
+            }));
+            if (response) {
+                console.log('response:', response);
+            }
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setTrains(data);
+            setFilteredTrains(data); // Update the Bookinglist's state with the filtered trains
 
-        if (location) {
-            filteredTrains = filteredTrains.filter(train => train.to === location);
+            console.log('Filtered trains:', data);
+        } catch (error) {
+            console.error('Error fetching filtered trains:', error);
         }
-
-        if (date) {
-            filteredTrains = filteredTrains.filter(train => train.availableDate === date);
-        }
-
-        setFilteredTrains(filteredTrains);
     };
 
     const clearFilters = () => {
-        setSelectedLocation('');
+        setSelectedSource('');
+        setSelectedDestination('');
         setSelectedDate('');
         setFilteredTrains(trainData);
     };
+
 
     return (
         <div className="max-w-4xl mx-auto font-poppins bg-white rounded-lg overflow-hidden shadow-lg p-4">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Filter Catalog</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Select Location:</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Source:</label>
                     <select
                         className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        value={selectedLocation}
-                        onChange={(e) => handleLocationFilter(e.target.value)}
+                        value={selectedSource}
+                        onChange={(e) => handleSourceFilter(e.target.value)}
                     >
                         <option value="">All Locations</option>
                         <option value="Mumbai">Mumbai</option>
                         <option value="Delhi">Delhi</option>
                         <option value="Chennai">Chennai</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Kolkata">Kolkata</option>
+
+                    </select>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Destination:</label>
+                    <select
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        value={selectedDestination}
+                        onChange={(e) => handleDestinationFilter(e.target.value)}
+                    >
+                        <option value="">All Locations</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Kolkata">Kolkata</option>
+
                     </select>
                 </div>
                 <div>
@@ -62,14 +94,23 @@ const FilterCatalog = ({ setFilteredTrains }) => {
                     />
                 </div>
             </div>
-            <button
-                className="block w-full sm:w-auto mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition duration-300"
-                onClick={clearFilters}
-            >
-                Clear Filters
-            </button>
+            <div className="flex mt-4 justify-between">
+                <button
+                    className="px-3 py-1 bg-white text-black font-bold text-base rounded border-2 border-black transition duration-100 hover:bg-yellow-400 hover:text-gray-900"
+                    onClick={clearFilters}
+                >
+                    Clear Filters
+                </button>
+                <button
+                    className="px-3 py-1 bg-black text-white font-bold text-base rounded border-2 border-black transition duration-100 hover:bg-gray-900 hover:text-yellow-500"
+                    onClick={ApplyFilter}
+                >
+                    Apply Filters
+                </button>
+            </div>
         </div>
     );
 };
 
 export default FilterCatalog;
+

@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './shared/Navbar';
@@ -13,22 +12,29 @@ import Summary from './pages/Summary';
 import AdminPage from './pages/admin/Admin';
 import DiscountBanner from './animations/Banner';
 import UserHistory from './pages/History';
+import useAdminCheck from './hooks/useAdminCheck';
 
 const App = () => {
+  const isAdmin = useAdminCheck();
+
   return (
     <BrowserRouter>
       <div>
-        < DiscountBanner />
+        <DiscountBanner />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/booking/:id" element={<Booking />} />
-          < Route path="/bookinglist" element={<Bookinglist />} />
-          < Route path="/summary/:id" element={<Summary />} />
-          < Route path="/admin" element={<AdminPage />} />
-          < Route path="/history" element={<UserHistory />} />
+          <Route path="/bookinglist" element={<Bookinglist />} />
+          <Route path="/summary/:id" element={<Summary />} />
+          {isAdmin ? (
+            <Route path="/admin" element={<AdminPage />} />
+          ) : (
+            <Route path="*" element={<Navigate to="/signin" replace />} /> // Redirect to login if not admin, using replace to avoid navigation history stacking
+          )}
+          <Route path="/history" element={<UserHistory />} />
         </Routes>
         <Footer />
         <ToastContainer />
