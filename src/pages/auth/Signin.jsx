@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const Signin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const validateForm = () => {
         const newErrors = {};
@@ -26,11 +29,37 @@ const Signin = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateForm()) {
-            // Submit form logic here
             console.log('Form submitted', { email, password });
         }
     };
+    const handleSignin = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/loginUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
 
+            const data = await response.json();
+            if (response.ok) {
+
+                localStorage.setItem('token', data.token);
+                const user = jwtDecode(data.token);
+                if (user.role === 'admin') {
+                    navigate('/admin');
+                } else {
+                    console.log('first')
+                    navigate('/');
+                }
+            } else {
+                throw new Error(data.error || 'An error occurred during login');
+            }
+        } catch (error) {
+            console.error('Login error:', error.message);
+        }
+    };
     return (
         <div>
             <main className="min-h-screen font-poppins flex items-center justify-center p-8 md:p-0">
@@ -75,7 +104,7 @@ const Signin = () => {
                                     <span className="text-red-500 text-sm mt-2">{errors.password}</span>
                                 )}
                             </div>
-                            <button className="my-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg px-4 py-2 rounded-md">
+                            <button onClick={handleSignin} className="my-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg px-4 py-2 rounded-md">
                                 Sign In
                             </button>
                         </form>

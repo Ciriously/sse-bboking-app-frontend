@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
 
 const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate(); // Use useNavigate hook
 
     const validateForm = () => {
         const newErrors = {};
@@ -35,7 +37,30 @@ const Signup = () => {
             console.log('Form submitted', { email, password });
         }
     };
+    const handleRegister = async () => {
+        const userData = { email, password, role: 'user' }; // Default role is 'user'
+        try {
+            const response = await fetch('http://localhost:4000/createUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
 
+            if (!response.ok) {
+                throw new Error('Failed to create user');
+            }
+
+            const user = await response.json();
+            console.log('User created successfully', user);
+            navigate('/')
+            // Handle success (e.g., redirect to login or dashboard)
+        } catch (error) {
+            console.error('Error creating user:', error);
+            // Handle error (e.g., show error message)
+        }
+    };
     return (
         <div>
             <main className="min-h-screen font-poppins flex items-center justify-center p-8 md:p-0">
@@ -97,7 +122,7 @@ const Signup = () => {
                                     <span className="text-red-500 text-sm mt-2">{errors.confirmPassword}</span>
                                 )}
                             </div>
-                            <button className="my-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg px-4 py-2 rounded-md">
+                            <button onClick={handleRegister} className="my-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg px-4 py-2 rounded-md">
                                 Sign Up
                             </button>
                         </form>

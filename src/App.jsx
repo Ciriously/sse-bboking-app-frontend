@@ -25,9 +25,9 @@ const App = () => {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/booking" element={<Booking />} />
-          < Route path="/Bookinglist" element={<Bookinglist />} />
-          < Route path="/Summary" element={<Summary />} />
-          < Route path="/Admin" element={<AdminPage />} />
+          < Route path="/bookinglist" element={<Bookinglist />} />
+          < Route path="/summary" element={<Summary />} />
+          < Route path="/admin" element={<AdminPage />} />
           < Route path="/history" element={<UserHistory />} />
         </Routes>
         <Footer />
