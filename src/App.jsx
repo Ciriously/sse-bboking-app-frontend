@@ -11,11 +11,14 @@ import Booking from './pages/Booking';
 import Bookinglist from './pages/Bookinglist';
 import Summary from './pages/Summary';
 import AdminPage from './pages/admin/Admin';
+import DiscountBanner from './animations/Banner';
+import UserHistory from './pages/History';
 
 const App = () => {
   return (
     <BrowserRouter>
       <div>
+        < DiscountBanner />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,6 +28,7 @@ const App = () => {
           < Route path="/Bookinglist" element={<Bookinglist />} />
           < Route path="/Summary" element={<Summary />} />
           < Route path="/Admin" element={<AdminPage />} />
+          < Route path="/history" element={<UserHistory />} />
         </Routes>
         <Footer />
         <ToastContainer />
