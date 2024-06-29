@@ -21,13 +21,10 @@ const UserHistory = () => {
     return (
         <>
             <div className="mb-4 border-b font-poppins border-gray-200">
-                <ul
-                    className="flex flex-wrap -mb-px text-xl font-medium text-center"
-                    role="tablist"
-                >
+                <ul className="flex flex-wrap -mb-px text-xl font-medium text-center justify-center" role="tablist">
                     <li className="mr-2" role="presentation">
                         <button
-                            className={`inline-block p-4 border-b-2 font-bold rounded-t-lg ${activeTab === 'upcoming' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300'}`}
+                            className={`inline-block p-4 border-b-2 font-bold rounded-t-lg ${activeTab === 'upcoming' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300'} text-center`}
                             type="button"
                             role="tab"
                             aria-selected={activeTab === 'upcoming'}
@@ -38,7 +35,7 @@ const UserHistory = () => {
                     </li>
                     <li className="mr-2" role="presentation">
                         <button
-                            className={`inline-block p-4 border-b-2 font-bold rounded-t-lg ${activeTab === 'cancelled' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300'}`}
+                            className={`inline-block p-4 border-b-2 font-bold rounded-t-lg ${activeTab === 'cancelled' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300'} text-center`}
                             type="button"
                             role="tab"
                             aria-selected={activeTab === 'cancelled'}
@@ -51,21 +48,21 @@ const UserHistory = () => {
             </div>
             <div id="default-styled-tab-content">
                 <div
-                    className={`p-4 rounded-lg bg-gray-50 ${activeTab === 'upcoming' ? '' : 'hidden'}`}
+                    className={`p-4 rounded-lg bg-gray-50 ${activeTab === 'upcoming' ? 'flex justify-center items-center' : 'hidden'}`}
                     role="tabpanel"
                     aria-labelledby="upcoming-tab"
                 >
-                    <div className=" bg-gray-100 flex items-center">
+                    <div className="bg-gray-100">
                         <UpcomingCard trips={upcomingTrips} />
                     </div>
                 </div>
                 <div
-                    className={`p-4 rounded-lg bg-gray-50 ${activeTab === 'cancelled' ? '' : 'hidden'}`}
+                    className={`p-4 rounded-lg bg-gray-50 ${activeTab === 'cancelled' ? 'flex justify-center items-center' : 'hidden'}`}
                     role="tabpanel"
                     aria-labelledby="cancelled-tab"
                 >
-                    <div className=" bg-gray-100 flex items-center">
-                        < CancelTrip trips={cancelledTrips} />
+                    <div className="bg-gray-100">
+                        <CancelTrip trips={cancelledTrips} />
                     </div>
                 </div>
             </div>

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import useAuthStatus from '../hooks/useAuthStatus';
 
 const TrainCard = () => {
     const navigate = useNavigate();
     const [trains, setTrains] = useState([]);
+    const isLoggedIn = useAuthStatus();
 
     useEffect(() => {
         const fetchTrains = async () => {
@@ -34,12 +38,16 @@ const TrainCard = () => {
     };
 
     const handleClick = (trainId) => {
-        // Navigate to booking page with trainId or handle booking logic
-        navigate(`/booking/${trainId}`);
+        if (!isLoggedIn) {
+            toast.error('Please log in to book a ticket');
+        } else {
+            navigate(`/booking/${trainId}`);
+        }
     };
 
     return (
         <div className="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
+            <ToastContainer />
             {trains.map((train, index) => (
                 <div key={index} className="mb-4 p-4 border-b border-gray-200">
                     <div className="flex justify-between items-center">

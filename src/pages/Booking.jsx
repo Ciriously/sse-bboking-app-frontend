@@ -32,7 +32,7 @@ const Booking = () => {
                 <CouponComponent />
             </div>
 
-            <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md w-full">
+            <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md mb-8 w-full">
 
                 <h2 className="text-2xl font-bold mb-4">IRCTC Account Details</h2>
                 <form onSubmit={handleSubmit}>

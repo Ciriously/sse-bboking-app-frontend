@@ -255,7 +255,7 @@ const PassengerDetails = () => {
                     </table>
                 </div>
             </div>
-            <div className="max-w-4xl  font-poppins mx-auto mt-10 mb-8 p-6 bg-white rounded-lg shadow-md w-full">
+            <div className="max-w-4xl  font-poppins mx-auto mt-10 mb-8 p-6 bg-white rounded-lg  w-full">
                 <div className="flex justify-between items-center mb-4">
                     <div>
                         <h2 className="text-2xl font-bold">Amount:<span className='text-red-500'>₹ {price} </span> </h2>

@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import useAdminCheck from '../hooks/useAdminCheck';
+import useToggle from '../hooks/useToggle';
+import useAuthStatus from '../hooks/useAuthStatus';
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            const decoded = jwtDecode(token);
-            if (decoded.role === 'admin') {
-                setIsAdmin(true);
-            }
-        }
-    }, []);
-
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const isLoggedIn = !!localStorage.getItem('token');
+    const [isOpen, toggleMenu] = useToggle(false);
+    const isAdmin = useAdminCheck();
+    const isLoggedIn = useAuthStatus();
 
     // Navigation data array
     const navItems = [
@@ -37,14 +24,14 @@ const Navbar = () => {
 
     return (
         <header className="sticky font-poppins top-0 z-50 bg-white/80 backdrop-blur-lg">
-            <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-12 py-4">
+            <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-2 py-4">
                 <div className="flex items-center space-x-8">
                     <Link to="/" className="flex items-center space-x-2">
                         <img
                             src="../assets/train.png"
                             loading="lazy"
                             alt="Train Logo"
-                            className="w-12 h-auto"
+                            className="w-16 mr-4 h-auto"
                         />
                         <div>
                             <span className="block text-xl font-bold text-red-500">Rail</span>
@@ -56,26 +43,26 @@ const Navbar = () => {
                 {/* Navigation links */}
                 <ul className="flex items-center space-x-8 md:flex hidden">
                     {navItems.map(item => (
-                        <li key={item.id} className="font-dm font-medium text-slate-700">
+                        <li key={item.id} className="text-lg font-medium  text-slate-700">
                             <Link to={item.link}>{item.title}</Link>
                         </li>
                     ))}
                 </ul>
-                <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-6 md:flex hidden">
                     {!isLoggedIn ? (
                         <>
-                            <Link to="/signin" className="font-dm text-lg font-medium text-slate-700">
+                            <Link to="/signin" className="font-dm text-xl font-medium text-slate-700">
                                 Sign in
                             </Link>
                             <Link
                                 to="/signup"
-                                className="rounded-md bg-gradient-to-br from-red-600 to-rose-400 px-3 py-1.5 font-dm text-lg font-medium text-white"
+                                className="rounded-md bg-gradient-to-br from-red-600 to-rose-400 px-3 py-1.5 font-dm text-xl font-medium text-white"
                             >
                                 Signup
                             </Link>
                         </>
                     ) : (
-                        <button onClick={handleLogout} className="font-dm text-lg font-medium text-slate-700">
+                        <button onClick={handleLogout} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-xl px-8 py-3.5 text-center mr-2 mb-2">
                             Logout
                         </button>
                     )}
@@ -112,7 +99,7 @@ const Navbar = () => {
                         </div>
                     ) : (
                         <div className="flex justify-center py-4">
-                            <button onClick={handleLogout} className="font-dm text-lg font-medium text-slate-700 px-4 py-2">
+                            <button onClick={handleLogout} className="text-white font-bold bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:ring-red-300 dark:focus:ring-red-800  rounded-lg text-sm px-3 py-2.5 text-center mr-2 mb-2">
                                 Logout
                             </button>
                         </div>

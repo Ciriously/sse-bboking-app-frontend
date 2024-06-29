@@ -40,7 +40,7 @@ const FilterCatalog = ({ setFilteredTrains }) => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg p-4">
+        <div className="max-w-4xl mx-auto font-poppins bg-white rounded-lg overflow-hidden shadow-lg p-4">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Filter Catalog</h2>
             <div className="flex justify-between items-center mb-4">
                 <div>

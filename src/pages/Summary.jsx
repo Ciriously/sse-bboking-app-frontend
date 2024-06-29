@@ -43,26 +43,17 @@ const Summary = () => {
         <div className="bg-gray-100 font-poppins min-h-screen py-8">
             <div className="container mx-auto px-4">
                 <h1 className="text-4xl font-semibold mb-8 text-center">Confirm Booking</h1>
-                <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex flex-col md:flex-row gap-8">
                     <div className="md:w-3/4">
-                        <div className="bg-white rounded-lg shadow-md p-6 mb-4">
+                        <div className="bg-white rounded-lg shadow-lg p-6 mb-4">
                             {trainDetails ? (
                                 <div>
-                                    <div className="flex items-center justify-between border-b pb-4 mb-4">
+                                    <div className="flex justify-between items-center border-b pb-4 mb-4">
                                         <div>
-                                            <h2 className="text-lg font-semibold">Train Name: {trainDetails.name}</h2>
-                                            <p className="text-gray-600">Train Time: {trainDetails.time}</p>
-                                            <p className="text-gray-600">Selected Source: {trainDetails.source}</p>
-                                            <p className="text-gray-600">Selected Destination: {trainDetails.destination}</p>
-
-                                        </div>
-                                        <div className="flex items-center">
-                                            {/* <img
-                                                className="h-12 w-12 rounded-full object-cover"
-                                                src={trainDetails.imageUrl || "https://via.placeholder.com/150"}
-                                                alt="Train"
-                                            /> */}
-                                            <span className="ml-4">Train Image</span>
+                                            <h2 className="text-2xl font-bold text-gray-800">Train Name: {trainDetails.name}</h2>
+                                            <p className="text-lg text-gray-600">Train Time: {trainDetails.time}</p>
+                                            <p className="text-lg text-gray-600">Source: {trainDetails.source}</p>
+                                            <p className="text-lg text-gray-600">Destination: {trainDetails.destination}</p>
                                         </div>
                                     </div>
                                     {/* Additional content like passenger details */}
@@ -74,26 +65,27 @@ const Summary = () => {
                     </div>
                     {/* Payment summary and confirmation button */}
                     <div className="md:w-1/4">
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-lg font-semibold mb-4">Payment Summary</h2>
-                            <div className="flex justify-between mb-2">
+                        <div className="bg-white rounded-lg shadow-lg p-6">
+                            <h2 className="text-xl font-bold mb-4">Payment Summary</h2>
+                            <div className="flex justify-between mb-2 text-lg">
                                 <span>Subtotal</span>
-                                <span>{price}</span>
+                                <span>₹{price}</span>
                             </div>
-                            <div className="flex justify-between mb-2">
+                            <div className="flex justify-between mb-2 text-lg">
                                 <span>Taxes</span>
-                                <span>$10.00</span>
+                                <span>₹10.00</span>
                             </div>
-                            <div className="flex justify-between mb-2">
+                            <div className="flex justify-between mb-2 text-lg">
                                 <span>Convenience Fee</span>
-                                <span>$25.00</span>
+                                <span>₹25.00</span>
                             </div>
                             <hr className="my-2" />
-                            <div className="flex justify-between mb-2">
-                                <span className="font-semibold">Total</span>
-                                <span className="font-semibold">{Number(price) + 10.00 + 25.00}</span>                            </div>
+                            <div className="flex justify-between mb-2 text-xl font-semibold">
+                                <span>Total</span>
+                                <span>₹{Number(price) + 10.00 + 25.00}</span>
+                            </div>
                             <button
-                                className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                className="bg-red-500 text-white py-3 px-4 rounded-lg mt-4 w-full hover:bg-red-600 focus:outline-none focus:bg-red-600"
                                 onClick={handleCheckout}
                             >
                                 Confirm Payment

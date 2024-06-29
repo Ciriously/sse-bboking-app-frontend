@@ -3,3 +3,57 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #3498db, #ffffff);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* For Firefox */
+/* Note: Firefox does not support gradients on scrollbar-thumb */
+
+* {
+  scrollbar-color: #3498db #000000;
+  scrollbar-width: thin;
+}
+
+@keyframes rotateText {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.rotate-text {
+  animation: rotateText 10s linear infinite;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.text-container {
+  overflow: hidden;
+}
+
+.rotate-text {
+  animation: rotateText 10s linear infinite;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Existing rotate-text and media query styles remain unchanged */
