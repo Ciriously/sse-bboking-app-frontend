@@ -15,9 +15,9 @@ const PaymentSuccessful = ({ title }) => {
     return (
         <div className="flex flex-col font-poppins items-center justify-center ">
             <Lottie options={defaultOptions} height={200} width={200} />
-            <h1 className="text-2xl font-bold text-white text-center mt-4">{title}</h1>
+            <h1 className="text-2xl font-bold text-black text-center mt-4">{title}</h1>
             <p className="text-lg text-[#575757] text-center mt-2">
-                <a href='/' className='text-md text-white  underline'>Please return to the Home screen</a></p>
+                <a href='/' className='text-md text-black  underline'>Please return to the Home screen</a></p>
 
         </div>
     );

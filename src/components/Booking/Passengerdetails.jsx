@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 
 
@@ -9,7 +9,7 @@ const PassengerDetails = () => {
     const [trainDetails, setTrainDetails] = useState(null);
     const { id } = useParams();
     const [price, setPrice] = useState(0); // Step 1: Initialize price with useState
-
+    const navigate = useNavigate();
 
     //* Fetch train details by ID
     const fetchTrainDetails = async () => {
@@ -101,7 +101,9 @@ const PassengerDetails = () => {
         }
     };
 
-
+    const handleProceed = () => {
+        navigate(`/summary/${trainDetails._id}`, { state: { price: price } });
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -259,12 +261,12 @@ const PassengerDetails = () => {
                         <h2 className="text-2xl font-bold">Amount:<span className='text-red-500'>₹ {price} </span> </h2>
                         <p className="text-gray-600">Final amount will be calculated at payment</p>
                     </div>
-                    <a href="/Summary"
+                    <button onClick={handleProceed}
                         className="bg-red-500 text-white py-4 px-8 rounded-lg"
-                    // onClick={() => console.log('Proceed clicked')}
+
                     >
                         Proceed
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

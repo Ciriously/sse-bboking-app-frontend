@@ -1,3 +1,5 @@
+// !! This is a custom hook to detect click outside of a component
+
 import { useEffect, useState } from "react";
 
 export const useOutsideClick = (ref) => {
