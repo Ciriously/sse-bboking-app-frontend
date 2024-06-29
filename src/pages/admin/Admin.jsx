@@ -154,10 +154,6 @@ const AdminPage = () => {
         setFormData(train);
         toggleModal();
     };
-    // const openEditModal = (train) => {
-    //     setFormData(train);
-    //     toggleModal();
-    // };
 
     return (
         <div className="container font-poppins mx-auto px-4 py-8">

@@ -1,5 +1,9 @@
 import React from 'react';
 
+// Import social icons images
+import emailicon from '../assets/email.png';
+import linkedinIcon from '../assets/linkedin.png';
+
 const footerLinks = [
     {
         category: 'Support',
@@ -45,8 +49,8 @@ const footerLinks = [
 ];
 
 const socialIcons = [
-    { name: 'Facebook', url: 'https://www.facebook.com', icon: 'facebookIcon.svg' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/sk-mirajul-islam-876438261/', icon: 'linkedinIcon.svg' },
+    { name: 'Facebook', url: 'https://www.facebook.com', icon: emailicon },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/sk-mirajul-islam-876438261/', icon: linkedinIcon },
 ];
 
 const Footer = () => {
