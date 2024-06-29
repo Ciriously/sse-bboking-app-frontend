@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Corrected import
+import { useAuth } from '../../context/AuthContext';
 
 const Signin = () => {
     const [email, setEmail] = useState('');
@@ -8,6 +8,7 @@ const Signin = () => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { signin } = useAuth();
 
     const validateForm = () => {
         const newErrors = {};
@@ -42,13 +43,8 @@ const Signin = () => {
 
                 const data = await response.json();
                 if (response.ok) {
-                    localStorage.setItem('token', data.token);
-                    const user = jwtDecode(data.token);
-                    if (user.role === 'admin') {
-                        navigate('/admin');
-                    } else {
-                        navigate('/');
-                    }
+                    signin(data.token);
+                    navigate('/');
                 } else {
                     throw new Error(data.error || 'An error occurred during login');
                 }

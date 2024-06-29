@@ -45,7 +45,9 @@ const TrainCard = ({ filteredTrains }) => {
             navigate(`/booking/${trainId}`);
         }
     };
+
     const displayTrains = filteredTrains && filteredTrains.length > 0 ? filteredTrains : trains;
+
     return (
         <div className="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
             <ToastContainer />
@@ -80,5 +82,3 @@ const TrainCard = ({ filteredTrains }) => {
 };
 
 export default TrainCard;
-
-
