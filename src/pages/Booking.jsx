@@ -63,20 +63,7 @@ const Booking = () => {
                 </form>
 
             </div>
-            <div className="max-w-4xl  font-poppins mx-auto mt-10 mb-8 p-6 bg-white rounded-lg shadow-md w-full">
-                <div className="flex justify-between items-center mb-4">
-                    <div>
-                        <h2 className="text-2xl font-bold">Amount:<span className='text-red-500'>₹ 1530 </span> / person</h2>
-                        <p className="text-gray-600">Final amount will be calculated at payment</p>
-                    </div>
-                    <a href="/Summary"
-                        className="bg-red-500 text-white py-4 px-8 rounded-lg"
-                    // onClick={() => console.log('Proceed clicked')}
-                    >
-                        Proceed
-                    </a>
-                </div>
-            </div>
+
         </div>
     );
 };

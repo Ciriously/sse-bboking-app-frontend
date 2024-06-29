@@ -1,8 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useParams } from 'react-router-dom';
+
+
 
 const PassengerDetails = () => {
+    const [trainDetails, setTrainDetails] = useState(null);
+    const { id } = useParams()
+
+    // Fetch train details by ID
+    const fetchTrainDetails = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/admin/getTrainById/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) throw new Error('Failed to fetch train details');
+
+            const data = await response.json();
+            setTrainDetails(data);
+        } catch (error) {
+            console.error('Error fetching train details:', error);
+            toast.error('Failed to fetch train details');
+        }
+    };
+
+    // Call fetchTrainDetails in useEffect to load train details when component mounts
+    useEffect(() => {
+        fetchTrainDetails();
+    }, [id]); // Dependency array includes id to refetch if id changes
+
+
     const [formData, setFormData] = useState({
         name: '',
         age: '',
@@ -26,6 +58,48 @@ const PassengerDetails = () => {
             [name]: value
         });
     };
+
+    // * Updates the Ticket
+    const updateUserTickets = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) throw new Error('No token found');
+
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const payload = JSON.parse(window.atob(base64));
+            const userId = payload.id;
+
+            if (!userId) throw new Error('User ID not found in token');
+
+            // Construct the ticket object with trainId and formData
+            const ticket = {
+                trainId: id, // id from useParams()
+                ...formData
+            };
+
+            console.log('Submitting ticket:', ticket);
+
+            const response = await fetch(`http://localhost:4000/user/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ tickets: [ticket] }) // Wrap the ticket object in an array
+            });
+
+            if (!response.ok) throw new Error(`Failed to update user tickets: ${response.statusText}`);
+
+            const data = await response.json();
+            console.log('Update response:', data);
+        } catch (error) {
+            console.error('Error updating user tickets:', error);
+            toast.error('Failed to update user tickets');
+        }
+    };
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -128,6 +202,7 @@ const PassengerDetails = () => {
                     </div>
                 </div>
                 <button
+                    onClick={updateUserTickets}
                     type="submit"
                     className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
@@ -145,6 +220,8 @@ const PassengerDetails = () => {
                                 <th className="py-2 px-4  text-left text-gray-700">Seat Type</th>
                                 <th className="py-2 px-4  text-left text-gray-700">Gender</th>
                                 <th className="py-2 px-4  text-left text-gray-700">Food Preference</th>
+                                <th className="py-2 px-4  text-left text-gray-700">Cost</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -155,10 +232,27 @@ const PassengerDetails = () => {
                                     <td className="py-2 px-4">{passenger.seatType}</td>
                                     <td className="py-2 px-4">{passenger.gender}</td>
                                     <td className="py-2 px-4">{passenger.foodPreference}</td>
+                                    <td className="py-2 px-4">
+                                        {trainDetails && trainDetails.seats[passenger.seatType.toLowerCase().replace('a', 'ac')].price}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div className="max-w-4xl  font-poppins mx-auto mt-10 mb-8 p-6 bg-white rounded-lg shadow-md w-full">
+                <div className="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 className="text-2xl font-bold">Amount:<span className='text-red-500'>₹ 1530 </span> / person</h2>
+                        <p className="text-gray-600">Final amount will be calculated at payment</p>
+                    </div>
+                    <a href="/Summary"
+                        className="bg-red-500 text-white py-4 px-8 rounded-lg"
+                    // onClick={() => console.log('Proceed clicked')}
+                    >
+                        Proceed
+                    </a>
                 </div>
             </div>
         </div>
@@ -166,3 +260,4 @@ const PassengerDetails = () => {
 };
 
 export default PassengerDetails;
+
