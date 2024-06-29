@@ -7,9 +7,11 @@ import { useParams } from 'react-router-dom';
 
 const PassengerDetails = () => {
     const [trainDetails, setTrainDetails] = useState(null);
-    const { id } = useParams()
+    const { id } = useParams();
+    const [price, setPrice] = useState(0); // Step 1: Initialize price with useState
 
-    // Fetch train details by ID
+
+    //* Fetch train details by ID
     const fetchTrainDetails = async () => {
         try {
             const response = await fetch(`http://localhost:4000/admin/getTrainById/${id}`, {
@@ -129,7 +131,16 @@ const PassengerDetails = () => {
             toast.error('You can only add up to 6 passengers');
         }
     };
-
+    useEffect(() => {
+        //* this function calculates the total price of the tickets
+        if (trainDetails) {
+            const total = passengers.reduce((acc, passenger) => {
+                const seatPrice = trainDetails.seats[passenger.seatType.toLowerCase().replace('a', 'ac')].price;
+                return acc + seatPrice;
+            }, 0);
+            setPrice(total); // Step 3: Update price state
+        }
+    }, [passengers, trainDetails]);
     return (
         <div className="max-w-3xl font-poppins mx-auto p-4">
             <form className="bg-white  p-2 mb-6" onSubmit={handleSubmit}>
@@ -237,6 +248,7 @@ const PassengerDetails = () => {
                                     </td>
                                 </tr>
                             ))}
+
                         </tbody>
                     </table>
                 </div>
@@ -244,7 +256,7 @@ const PassengerDetails = () => {
             <div className="max-w-4xl  font-poppins mx-auto mt-10 mb-8 p-6 bg-white rounded-lg shadow-md w-full">
                 <div className="flex justify-between items-center mb-4">
                     <div>
-                        <h2 className="text-2xl font-bold">Amount:<span className='text-red-500'>₹ 1530 </span> / person</h2>
+                        <h2 className="text-2xl font-bold">Amount:<span className='text-red-500'>₹ {price} </span> </h2>
                         <p className="text-gray-600">Final amount will be calculated at payment</p>
                     </div>
                     <a href="/Summary"
