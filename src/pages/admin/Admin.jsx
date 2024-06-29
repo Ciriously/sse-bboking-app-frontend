@@ -115,8 +115,10 @@ const AdminPage = () => {
         }
     };
 
+
     const handleDeleteTrain = async (id) => {
         try {
+            console.log("Deleting train with id:", id); // Before deletion
             const token = localStorage.getItem('token');
             if (!token) {
                 console.error('No admin token found');
@@ -130,6 +132,8 @@ const AdminPage = () => {
                 },
             });
 
+            console.log("Delete response status:", response.status); // After fetching response
+
             if (!response.ok) {
                 const errorBody = await response.text();
                 console.error('Failed to delete train:', errorBody);
@@ -137,6 +141,8 @@ const AdminPage = () => {
             }
 
             const updatedTrains = trains.filter(train => train.id !== id);
+            console.log("Trains list after deletion:", updatedTrains); // After filtering out the deleted train
+
             setTrains(updatedTrains);
         } catch (error) {
             console.error('Failed to delete train:', error.message);
@@ -144,9 +150,14 @@ const AdminPage = () => {
     };
 
     const openEditModal = (train) => {
+        console.log("Opening edit modal for train:", train); // Before opening edit modal
         setFormData(train);
         toggleModal();
     };
+    // const openEditModal = (train) => {
+    //     setFormData(train);
+    //     toggleModal();
+    // };
 
     return (
         <div className="container font-poppins mx-auto px-4 py-8">
@@ -196,7 +207,7 @@ const AdminPage = () => {
                                     </button>
                                     <button
                                         className="bg-red-500 text-white py-1 px-2 rounded-lg hover:bg-red-700"
-                                        onClick={() => handleDeleteTrain(train.id)}
+                                        onClick={() => handleDeleteTrain(train._id)}
                                     >
                                         Delete
                                     </button>
