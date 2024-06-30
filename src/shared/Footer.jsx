@@ -4,6 +4,8 @@ import React from 'react';
 import emailicon from '../assets/email.png';
 import linkedinIcon from '../assets/linkedin.png';
 
+// * Dummy Links 
+
 const footerLinks = [
     {
         category: 'Support',
@@ -50,7 +52,7 @@ const footerLinks = [
 
 const socialIcons = [
     { name: 'Facebook', url: 'https://www.facebook.com', icon: emailicon },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/sk-mirajul-islam-876438261/', icon: linkedinIcon },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/adityad12/', icon: linkedinIcon },
 ];
 
 const Footer = () => {
