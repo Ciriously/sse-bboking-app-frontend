@@ -13,7 +13,7 @@ const TrainCard = ({ filteredTrains }) => {
         if (!filteredTrains) {
             const fetchTrains = async () => {
                 try {
-                    const response = await fetch('http://localhost:4000/admin/getAllTrains');
+                    const response = await fetch('https://sse-bookingapp-backend.vercel.app/admin/getAllTrains');
                     if (!response.ok) {
                         throw new Error('Failed to fetch trains');
                     }

@@ -13,7 +13,7 @@ const AdminPage = () => {
 
     const fetchTrains = async () => {
         try {
-            const response = await fetch('http://localhost:4000/admin/getAllTrains');
+            const response = await fetch('https://sse-bookingapp-backend.vercel.app/admin/getAllTrains');
             if (!response.ok) {
                 throw new Error('Failed to fetch trains');
             }
@@ -42,7 +42,7 @@ const AdminPage = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:4000/admin/createTrain', {
+            const response = await fetch('https://sse-bookingapp-backend.vercel.app/admin/createTrain', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ const AdminPage = () => {
                 return;
             }
 
-            const response = await fetch(`http://localhost:4000/admin/updateTrainById/${trainData.id}`, {
+            const response = await fetch(`https://sse-bookingapp-backend.vercel.app/admin/updateTrainById/${trainData.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ const AdminPage = () => {
                 return;
             }
 
-            const response = await fetch(`http://localhost:4000/admin/deleteTrainById/${id}`, {
+            const response = await fetch(`https://sse-bookingapp-backend.vercel.app/admin/deleteTrainById/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,

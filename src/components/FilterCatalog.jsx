@@ -21,7 +21,7 @@ const FilterCatalog = ({ setFilteredTrains }) => {
 
     const ApplyFilter = async () => {
         try {
-            const response = await fetch('http://localhost:4000/admin/getTrainByFilter?' + new URLSearchParams({
+            const response = await fetch('https://sse-bookingapp-backend.vercel.app/admin/getTrainByFilter?' + new URLSearchParams({
                 source: selectedSource,
                 destination: selectedDestination,
                 date: selectedDate

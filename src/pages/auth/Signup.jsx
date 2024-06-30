@@ -41,7 +41,7 @@ const Signup = () => {
     const handleRegister = async () => {
         const userData = { email, password, role: 'user' }; // Default role is 'user'
         try {
-            const response = await fetch('http://localhost:4000/createUser', {
+            const response = await fetch('https://sse-bookingapp-backend.vercel.app/createUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

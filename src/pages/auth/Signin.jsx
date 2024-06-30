@@ -33,7 +33,7 @@ const Signin = () => {
         if (validateForm()) {
             try {
                 setLoading(true);
-                const response = await fetch('http://localhost:4000/loginUser', {
+                const response = await fetch('https://sse-bookingapp-backend.vercel.app/loginUser', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

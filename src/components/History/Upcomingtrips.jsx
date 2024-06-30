@@ -11,7 +11,7 @@ const UpcomingCard = () => {
 
     const fetchUser = async (userId) => {
         try {
-            const response = await fetch(`http://localhost:4000/user/${userId}`, {
+            const response = await fetch(`https://sse-bookingapp-backend.vercel.app/user/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const UpcomingCard = () => {
     const fetchTrainDetails = async (trainIds) => {
         try {
             const promises = trainIds.map(id =>
-                fetch(`http://localhost:4000/admin/getTrainById/${id}`, {
+                fetch(`https://sse-bookingapp-backend.vercel.app/admin/getTrainById/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ const UpcomingCard = () => {
     const confirmCancel = async () => {
         try {
             const updatedTickets = []; // Empty array for tickets
-            const response = await fetch(`http://localhost:4000/user/${userId}`, {
+            const response = await fetch(`https://sse-bookingapp-backend.vercel.app/user/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
