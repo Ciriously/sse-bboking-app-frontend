@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# Rail Yatri
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Rail Yatri is a full-stack e-ticketing system inspired by IRCTC (Indian Railways Catering and Tourism Corporation). It allows users to browse train options, book tickets, manage bookings, and cancel reservations. The system is built using the MERN stack (MongoDB, Express.js, React, and Node.js).
+<img width="2500" alt="ss" src="./public/assets/homepage.jpg">
 
-## Available Scripts
+<h2>Installation Frontend</h2>
+Use the package manager [npm](https://www.npmjs.com/) to install Rail Yatra.
 
-In the project directory, you can run:
+Fork the Project by using:
 
-### `npm start`
+```bash
+git clone https://github.com/Ciriously/sse-bboking-app-frontend
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+then cd into the project by using:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+cd sse-booking-app-frontend
+```
 
-### `npm test`
+Now, Install the packages by running:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install
+```
 
-### `npm run build`
+Run project with command
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<h2>Installation Backend</h2>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Clone the Project by using:
 
-### `npm run eject`
+```bash
+git clone https://github.com/Ciriously/sse-bookingapp-backend
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+then cd into the project by using:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+cd sse-booking-app-backend
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Now, Install the packages by running:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm install
+```
 
-## Learn More
+Run project with command
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm run dev
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<h2>Environment Variables:</h2>
 
-### Code Splitting
+Store this into Your .env variable file:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+JWT_SECRET ="railyatri"
 
-### Analyzing the Bundle Size
+MONGODB_URI=mongodb+srv://adityamishrad13:dbpassword@railyatridb.um1h8oj.mongodb.net/?retryWrites=true&w=majority&appName=railyatridb
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
 
-### Making a Progressive Web App
+<h2> Built with  </h2>
+<ul>
+  <li>FrontEnd: <b> React.JS, Redux Library, Tailwindcss, HTML/CSS </b></li>
+  <li>Backend:  <b> Node.JS, Express.JS </b> </li>
+  <li>Database: <b> MongoDB, Mongoose </b> </li>
+</ul>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<h2> Deployment Links</h2
+<ul>
+  <li>Vercel: <b> https://railyatri.vercel.app/ </b> </li>
+</ul>
