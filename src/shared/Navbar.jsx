@@ -21,7 +21,7 @@ const Navbar = () => {
         ].filter(Boolean);
 
         setNavItems(updatedNavItems);
-        console.log("Updated nav items:", updatedNavItems); // Log updated nav items
+        // console.log("Updated nav items:", updatedNavItems); 
     }, [isAdmin, user]);
 
     const handleLogout = () => {

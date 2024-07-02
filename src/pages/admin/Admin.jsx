@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import TrainModal from './TrainModal'; // Import TrainModal component
-import EditModal from './EditModal'; // Import EditModal component
+import TrainModal from './TrainModal';
+import EditModal from './EditModal';
 
 const AdminPage = () => {
     const [trains, setTrains] = useState([]);
@@ -43,12 +43,12 @@ const AdminPage = () => {
                 throw new Error('Failed to fetch trains');
             }
             const data = await response.json();
-            console.log('Fetched trains:', data); // Log the fetched data
+            console.log('Fetched trains:', data);
 
             if (searchTerm) {
-                setFilteredTrains(data); // Update filtered trains if searchTerm is not empty
+                setFilteredTrains(data);
             } else {
-                setTrains(data); // Update all trains if searchTerm is empty
+                setTrains(data);
             }
         } catch (error) {
             console.error('Failed to fetch trains:', error.message);
