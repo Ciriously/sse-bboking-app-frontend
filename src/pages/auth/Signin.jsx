@@ -109,7 +109,7 @@ const Signin = () => {
                             )}
                         </form>
                         <p className="text-gray-500">
-                            Don't have an account?{" "}
+                            Don't have an account?{' '}
                             <a href="/signup" className="text-blue-500 font-semibold underline">
                                 Sign up
                             </a>
@@ -127,6 +127,6 @@ const Signin = () => {
             </main>
         </div>
     );
-}
+};
 
 export default Signin;

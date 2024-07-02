@@ -1,25 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAdminCheck from '../hooks/useAdminCheck';
 import useToggle from '../hooks/useToggle';
-import useAuthStatus from '../hooks/useAuthStatus';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
     const [isOpen, toggleMenu] = useToggle(false);
     const isAdmin = useAdminCheck();
-    const isLoggedIn = useAuthStatus();
+    const { user, signout } = useAuth();
 
-    // Navigation data array
-    const navItems = [
-        { id: 1, title: 'Home', link: '/' },
-        isAdmin && { id: 2, title: 'Admin', link: '/admin' },
-        !isAdmin && isLoggedIn && { id: 4, title: 'My Trips', link: '/history' }, // Added condition for "My Trips"
-        { id: 3, title: 'Book a Ticket', link: '/bookinglist' },
-    ].filter(Boolean);
+    const [navItems, setNavItems] = useState([]);
+
+    useEffect(() => {
+        console.log("useEffect triggered with isAdmin:", isAdmin, "and user:", user); // Log the states
+        const updatedNavItems = [
+            { id: 1, title: 'Home', link: '/', isUser: true, isAdmin: true },
+            isAdmin ? { id: 2, title: 'Admin', link: '/admin', isUser: false, isAdmin: true } : null,
+            user ? { id: 4, title: 'My Trips', link: '/history', isUser: true, isAdmin: false } : null,
+            { id: 3, title: 'Book a Ticket', link: '/bookinglist', isUser: true, isAdmin: true },
+        ].filter(Boolean);
+
+        setNavItems(updatedNavItems);
+        console.log("Updated nav items:", updatedNavItems); // Log updated nav items
+    }, [isAdmin, user]);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        window.location.reload();
+        console.log("Logging out");
+        signout();
     };
 
     return (
@@ -49,7 +56,7 @@ const Navbar = () => {
                     ))}
                 </ul>
                 <div className="flex items-center space-x-6 md:flex hidden">
-                    {!isLoggedIn ? (
+                    {!user ? (
                         <>
                             <Link to="/signin" className="font-dm text-xl font-medium text-slate-700">
                                 Sign in
@@ -88,7 +95,7 @@ const Navbar = () => {
                             </li>
                         ))}
                     </ul>
-                    {!isLoggedIn ? (
+                    {!user ? (
                         <div className="flex justify-center py-4">
                             <Link to="/signin" className="font-dm text-lg font-medium text-slate-700 px-4 py-2">
                                 Sign in

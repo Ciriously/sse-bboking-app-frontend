@@ -1,5 +1,4 @@
-// AuthContext.js
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
@@ -13,19 +12,29 @@ export const AuthProvider = ({ children }) => {
         return null;
     });
 
+    const [isTokenUpdated, setIsTokenUpdated] = useState(false);
+
     const signin = (token) => {
         localStorage.setItem('token', token);
         const decodedUser = jwtDecode(token);
         setUser(decodedUser);
+        setIsTokenUpdated(true);
     };
 
     const signout = () => {
         localStorage.removeItem('token');
         setUser(null);
+        setIsTokenUpdated(true);
     };
 
+    useEffect(() => {
+        if (isTokenUpdated) {
+            setIsTokenUpdated(false);
+        }
+    }, [isTokenUpdated]);
+
     return (
-        <AuthContext.Provider value={{ user, signin, signout }}>
+        <AuthContext.Provider value={{ user, signin, signout, isTokenUpdated }}>
             {children}
         </AuthContext.Provider>
     );

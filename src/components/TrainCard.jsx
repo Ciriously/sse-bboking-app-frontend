@@ -30,11 +30,11 @@ const TrainCard = ({ filteredTrains }) => {
 
     const determineBackgroundColor = (seats) => {
         if (seats > 80) {
-            return 'bg-green-500 bg-opacity-30'; // Green background with opacity
+            return 'bg-green-500 bg-opacity-30';
         } else if (seats > 50) {
-            return 'bg-yellow-500 bg-opacity-30'; // Yellow background with opacity
+            return 'bg-yellow-500 bg-opacity-30';
         } else {
-            return 'bg-red-500 bg-opacity-30'; // Red background with opacity
+            return 'bg-red-500 bg-opacity-30'
         }
     };
 

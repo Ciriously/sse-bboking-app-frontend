@@ -14,10 +14,8 @@ const UserHistory = () => {
             <header className="mb-4 font-poppins text-center">
                 <h1 className="text-6xl mb-8 font-bold text-purple-600">Upcoming Trips</h1>
             </header>
-            <div className="flex justify-center items-center">
-                <div className="bg-gray-100">
-                    <UpcomingCard trips={upcomingTrips} />
-                </div>
+            <div className="flex justify-center bg-blue-100  items-center">
+                <UpcomingCard trips={upcomingTrips} />
             </div>
         </>
     );

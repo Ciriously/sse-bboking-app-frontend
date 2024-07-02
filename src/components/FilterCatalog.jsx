@@ -19,6 +19,8 @@ const FilterCatalog = ({ setFilteredTrains }) => {
         setSelectedDate(date);
     };
 
+    // !! Yet to implement this method use context later 
+
     const ApplyFilter = async () => {
         try {
             const response = await fetch('https://sse-bookingapp-backend.vercel.app/admin/getTrainByFilter?' + new URLSearchParams({

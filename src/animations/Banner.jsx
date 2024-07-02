@@ -1,27 +1,3 @@
-// import React, { useState } from 'react';
-
-// const DiscountBanner = () => {
-//     const [visible, setVisible] = useState(true);
-
-//     const handleClose = () => {
-//         setVisible(false);
-//     };
-
-//     if (!visible) return null;
-
-//     return (
-//         <div className="flex font-poppins justify-between items-center p-4 shadow-md bg-gradient-to-r from-green-400 via-blue-500 to-purple-600">
-//             <div className="rotate-text">
-//                 <p className="text-lg text-center font-semibold">Exciting Offer: <span className="text-yellow-300 font-bold">SAVE20</span> - Save 20% on your first booking!</p>
-//             </div>
-//             <button onClick={handleClose} className="text-white font-bold">
-//                 &times;
-//             </button>
-//         </div>
-//     );
-// };
-
-// export default DiscountBanner;
 import React, { useState } from 'react';
 
 const DiscountBanner = () => {

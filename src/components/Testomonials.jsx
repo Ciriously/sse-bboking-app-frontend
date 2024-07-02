@@ -53,7 +53,7 @@ const testimonialData = [
 
 const TestimoniesSection = () => {
   return (
-    <section id="testimonies" className="py-20 bg-white">
+    <section id="testimonies" className="py-20 font-poppins bg-white">
       <div className="max-w-6xl mx-8 md:mx-10 lg:mx-20 xl:mx-auto">
         <div className="mb-12 space-y-5 md:mb-16 md:text-center">
           <div className="inline-block px-3 py-1 text-sm font-semibold text-indigo-900 rounded-lg md:text-center bg-gray-300 hover:cursor-pointer hover:bg-gray-400">

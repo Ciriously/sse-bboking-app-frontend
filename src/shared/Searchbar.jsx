@@ -18,7 +18,6 @@ const Searchbar = () => {
                 setTrains(trainsData);
             } catch (error) {
                 console.error('Error fetching trains:', error.message);
-                // Handle error (e.g., show error message, retry logic)
             }
         };
 

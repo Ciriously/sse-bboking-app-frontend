@@ -34,7 +34,7 @@ const App = () => {
           {isAdmin ? (
             <Route path="/admin" element={<AdminPage />} />
           ) : (
-            <Route path="*" element={<Navigate to="/signin" replace />} /> // Redirect to login if not admin, using replace to avoid navigation history stacking
+            <Route path="*" element={<Navigate to="/" replace />} /> // Redirect to login if not admin, using replace to avoid navigation history stacking
           )}
           <Route path="/history" element={<UserHistory />} />
         </Routes>

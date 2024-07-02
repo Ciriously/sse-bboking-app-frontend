@@ -8,8 +8,10 @@ const UpcomingCard = () => {
     const [userId, setUserId] = useState(null);
     const [userDetails, setUserDetails] = useState({});
     const [trainDetails, setTrainDetails] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const fetchUser = async (userId) => {
+        setLoading(true);
         try {
             const response = await fetch(`https://sse-bookingapp-backend.vercel.app/user/${userId}`, {
                 method: 'GET',
@@ -23,10 +25,13 @@ const UpcomingCard = () => {
         } catch (error) {
             console.error('Error fetching user details:', error);
             toast.error('Failed to fetch user details');
+        } finally {
+            setLoading(false);
         }
     };
 
     const fetchTrainDetails = async (trainIds) => {
+        setLoading(true);
         try {
             const promises = trainIds.map(id =>
                 fetch(`https://sse-bookingapp-backend.vercel.app/admin/getTrainById/${id}`, {
@@ -44,6 +49,8 @@ const UpcomingCard = () => {
         } catch (error) {
             console.error('Error fetching train details:', error);
             toast.error('Failed to fetch train details');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -104,10 +111,16 @@ const UpcomingCard = () => {
     };
 
     return (
-        <div className="grid grid-cols-1 font-poppins gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1">
-            {trainDetails.length > 0 ? (
+        <div className="flex flex-col items-center justify-center  font-poppins p-6">
+            {loading ? (
+                <div className="flex justify-center items-center w-full h-24">
+                    <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 border-black rounded-full" role="status">
+                        <span className="visually-hidden"></span>
+                    </div>
+                </div>
+            ) : trainDetails.length > 0 ? (
                 trainDetails.map((train) => (
-                    <div key={train.id} className="bg-white rounded-lg w-[30rem] shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                    <div key={train.id} className="bg-white rounded-lg w-[30rem] shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out mb-6">
                         <h2 className="text-xl font-bold text-gray-900 mb-2">{train.name}</h2>
                         <p className="text-md text-gray-700">{train.date}</p>
                         <p className="text-md text-gray-700 mb-4">{train.source} - {train.destination}</p>
