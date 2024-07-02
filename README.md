@@ -78,7 +78,3 @@ MONGODB_URI=mongodb+srv://adityamishrad13:dbpassword@railyatridb.um1h8oj.mongodb
 <ul>
   <li>Vercel: <b> https://railyatri.vercel.app/ </b> </li>
 </ul>
-
-Flow should be Proper no reload on Header -- Fix flow -----Fixed issue
-Update fix and Delete fixes
-Search in Admin and Date and filter and pagination

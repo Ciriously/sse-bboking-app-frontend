@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TrainModal from './TrainModal'; // Import TrainModal component
+import EditModal from './EditModal'; // Import EditModal component
 
 const AdminPage = () => {
     const [trains, setTrains] = useState([]);
@@ -9,19 +10,33 @@ const AdminPage = () => {
     const [trainsPerPage] = useState(5); // Number of trains to display per page
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredTrains, setFilteredTrains] = useState([]);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedTrainForEdit, setSelectedTrainForEdit] = useState(null);
 
     const toggleModal = () => setShowModal(!showModal);
+    const openEditModal = (train) => {
+        setSelectedTrainForEdit(train);
+
+        setIsEditModalOpen(true);
+    };
+
+    // Function to close the modal
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
+    };
 
     useEffect(() => {
         fetchTrains();
     }, [searchTerm]); // Trigger fetchTrains when searchTerm changes
-
+    useEffect(() => {
+        fetchTrains();
+    }, [trains]); // Trigger fetchTrains only once on component mount
     const fetchTrains = async () => {
         try {
             console.log('Fetching trains with search term:', searchTerm);
             const url = searchTerm
-                ? `http://localhost:4000/admin/getAllTrains?name=${encodeURIComponent(searchTerm)}`
-                : 'http://localhost:4000/admin/getAllTrains';
+                ? `https://sse-bookingapp-backend.vercel.app/admin/getAllTrains?name=${encodeURIComponent(searchTerm)}`
+                : 'https://sse-bookingapp-backend.vercel.app/admin/getAllTrains';
 
             const response = await fetch(url);
             if (!response.ok) {
@@ -56,18 +71,14 @@ const AdminPage = () => {
             const keys = name.split('.');
             const lastKey = keys.pop();
             const nestedObject = keys.reduce((acc, key) => {
-                // Ensure the current key points to an object
-                if (!acc[key]) acc[key] = {}; // Initialize as an empty object if undefined
-                return acc[key]; // Return the next level of the nested object
-            }, modalFormData); // Start with the current modalFormData
+                if (!acc[key]) acc[key] = {};
+                return acc[key];
+            }, modalFormData);
 
-            // Safely set the value on the last key
             nestedObject[lastKey] = value;
 
-            // Update the state with the new formData
             setModalFormData({ ...modalFormData }); // Spread to trigger state update
         } else {
-            // Handle non-nested properties
             setModalFormData({ ...modalFormData, [name]: value });
         }
     }
@@ -103,39 +114,8 @@ const AdminPage = () => {
         }
     };
 
-    const updateTrain = async (trainData) => {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                console.error('No admin token found');
-                return;
-            }
 
-            const response = await fetch(`https://sse-bookingapp-backend.vercel.app/admin/updateTrainById/${trainData.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify(trainData),
-            });
 
-            if (!response.ok) {
-                const errorBody = await response.text();
-                console.error('Response error body:', errorBody);
-                throw new Error('Network response was not ok');
-            }
-
-            const updatedTrain = await response.json();
-            const updatedTrains = trains.map(train =>
-                train.id === trainData.id ? updatedTrain : train
-            );
-            setTrains(updatedTrains);
-            toggleModal(); // Close the modal after updating train, not resetting form data here
-        } catch (error) {
-            console.error('Failed to update train:', error.message);
-        }
-    };
 
     const handleDeleteTrain = async (id) => {
         try {
@@ -170,11 +150,7 @@ const AdminPage = () => {
         }
     };
 
-    const openEditModal = (train) => {
-        console.log("Opening edit modal for train:", train); // Before opening edit modal
-        setModalFormData(train);
-        toggleModal();
-    };
+
 
     // Pagination logic
     const indexOfLastTrain = currentPage * trainsPerPage;
@@ -185,7 +161,7 @@ const AdminPage = () => {
 
     return (
         <div className="container font-poppins mx-auto px-4 py-8">
-            <h1 className="text-4xl font-semibold mb-4">Admin Dashboard - Manage Trains</h1>
+            <h1 className="text-5xl font-semibold mb-4">Admin Dashboard - Manage Trains</h1>
             <div className="flex items-center mb-4">
                 <input
                     type="text"
@@ -245,12 +221,17 @@ const AdminPage = () => {
                                     >
                                         Edit
                                     </button>
+
+                                    {isEditModalOpen && selectedTrainForEdit && (
+                                        <EditModal trainData={selectedTrainForEdit} closeModal={closeEditModal} />
+                                    )}
                                     <button
                                         className="bg-red-500 text-white py-1 px-2 rounded-lg hover:bg-red-700"
                                         onClick={() => handleDeleteTrain(train.id)}
                                     >
                                         Delete
                                     </button>
+
                                 </td>
                             </tr>
                         ))}
@@ -284,7 +265,7 @@ const AdminPage = () => {
                 formData={modalFormData}
                 handleChangeModal={handleChangeModal}
                 handleAddTrain={handleAddTrain}
-                updateTrain={updateTrain}
+            // updateTrain={updateTrain}
             />
         </div>
     );

@@ -7,6 +7,7 @@ import useAuthStatus from '../hooks/useAuthStatus';
 const TrainCard = ({ filteredTrains }) => {
     const navigate = useNavigate();
     const [trains, setTrains] = useState([]);
+    const [isLoading, setIsLoading] = useState(true); // Add loading state
     const isLoggedIn = useAuthStatus();
 
     useEffect(() => {
@@ -19,8 +20,10 @@ const TrainCard = ({ filteredTrains }) => {
                     }
                     const trainsData = await response.json();
                     setTrains(trainsData);
+                    setIsLoading(false); // Set loading to false after data is fetched
                 } catch (error) {
                     console.error('Error fetching trains:', error.message);
+                    setIsLoading(false); // Handle loading state on error
                 }
             };
 
@@ -34,7 +37,7 @@ const TrainCard = ({ filteredTrains }) => {
         } else if (seats > 50) {
             return 'bg-yellow-500 bg-opacity-30';
         } else {
-            return 'bg-red-500 bg-opacity-30'
+            return 'bg-red-500 bg-opacity-30';
         }
     };
 
@@ -51,32 +54,36 @@ const TrainCard = ({ filteredTrains }) => {
     return (
         <div className="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
             <ToastContainer />
-            {displayTrains.map((train, index) => (
-                <div key={index} className="mb-4 p-4 border-b border-gray-200">
-                    <div className="flex justify-between items-center">
-                        <h2 className="font-bold text-2xl text-gray-800">{train.name}</h2>
-                        <span className="text-lg text-gray-600">{train.timings}</span>
+            {isLoading ? ( // Show loading indicator if isLoading is true
+                <p className="text-center py-4">Loading trains...</p>
+            ) : (
+                displayTrains.map((train, index) => (
+                    <div key={index} className="mb-4 p-4 border-b border-gray-200">
+                        <div className="flex justify-between items-center">
+                            <h2 className="font-bold text-2xl text-gray-800">{train.name}</h2>
+                            <span className="text-lg text-gray-600">{train.timings}</span>
+                        </div>
+                        <div className="mt-2">
+                            <p className="text-md font-poppins text-gray-600">From: {train.source} - To: {train.destination}</p>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                            {Object.entries(train.seats || {}).map(([classType, { price, count }], idx) => (
+                                <div key={idx} className={`rounded-lg p-4 border border-gray-200 ${determineBackgroundColor(count)}`}>
+                                    <p className="text-lg font-bold text-gray-800">{classType.toUpperCase()}</p>
+                                    <p className="text-sm text-gray-600">Seats: {count}</p>
+                                    <p className="text-sm text-gray-600">Price: {price}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <button
+                            className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition duration-300"
+                            onClick={() => handleClick(train._id)}
+                        >
+                            Book Now
+                        </button>
                     </div>
-                    <div className="mt-2">
-                        <p className="text-md font-poppins text-gray-600">From: {train.source} - To: {train.destination}</p>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-                        {Object.entries(train.seats || {}).map(([classType, { price, count }], idx) => (
-                            <div key={idx} className={`rounded-lg p-4 border border-gray-200 ${determineBackgroundColor(count)}`}>
-                                <p className="text-lg font-bold text-gray-800">{classType.toUpperCase()}</p>
-                                <p className="text-sm text-gray-600">Seats: {count}</p>
-                                <p className="text-sm text-gray-600">Price: {price}</p>
-                            </div>
-                        ))}
-                    </div>
-                    <button
-                        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition duration-300"
-                        onClick={() => handleClick(train._id)}
-                    >
-                        Book Now
-                    </button>
-                </div>
-            ))}
+                ))
+            )}
         </div>
     );
 };
