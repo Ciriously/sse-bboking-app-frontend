@@ -1,38 +1,76 @@
 import React, { useState, useEffect } from 'react';
+import TrainModal from './TrainModal'; // Import TrainModal component
 
 const AdminPage = () => {
     const [trains, setTrains] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [formData, setFormData] = useState({ id: '', name: '', seats: { '3ac': { price: '', count: '' }, '2ac': { price: '', count: '' }, '1ac': { price: '', count: '' } }, source: '', destination: '', date: '' });
+    const [modalFormData, setModalFormData] = useState({ id: '', name: '', seats: { '3ac': { price: '', count: '' }, '2ac': { price: '', count: '' }, '1ac': { price: '', count: '' } }, source: '', destination: '', date: '' });
+    const [currentPage, setCurrentPage] = useState(1);
+    const [trainsPerPage] = useState(5); // Number of trains to display per page
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredTrains, setFilteredTrains] = useState([]);
 
     const toggleModal = () => setShowModal(!showModal);
 
     useEffect(() => {
         fetchTrains();
-    }, []);
+    }, [searchTerm]); // Trigger fetchTrains when searchTerm changes
 
     const fetchTrains = async () => {
         try {
-            const response = await fetch('https://sse-bookingapp-backend.vercel.app/admin/getAllTrains');
+            console.log('Fetching trains with search term:', searchTerm);
+            const url = searchTerm
+                ? `http://localhost:4000/admin/getAllTrains?name=${encodeURIComponent(searchTerm)}`
+                : 'http://localhost:4000/admin/getAllTrains';
+
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Failed to fetch trains');
             }
             const data = await response.json();
-            setTrains(data);
+            console.log('Fetched trains:', data); // Log the fetched data
+
+            if (searchTerm) {
+                setFilteredTrains(data); // Update filtered trains if searchTerm is not empty
+            } else {
+                setTrains(data); // Update all trains if searchTerm is empty
+            }
         } catch (error) {
             console.error('Failed to fetch trains:', error.message);
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        if (name.includes('.')) {
-            const [seatClass, key] = name.split('.');
-            setFormData({ ...formData, seats: { ...formData.seats, [seatClass]: { ...formData.seats[seatClass], [key]: value } } });
-        } else {
-            setFormData({ ...formData, [name]: value });
-        }
+    const handleChangeSearch = (e) => {
+        const { value } = e.target;
+        setSearchTerm(value);
     };
+
+    const handleClearSearch = () => {
+        setSearchTerm('');
+    };
+
+    function handleChangeModal(event) {
+        const { name, value } = event.target;
+        if (name.includes('.')) {
+            // Handle nested properties
+            const keys = name.split('.');
+            const lastKey = keys.pop();
+            const nestedObject = keys.reduce((acc, key) => {
+                // Ensure the current key points to an object
+                if (!acc[key]) acc[key] = {}; // Initialize as an empty object if undefined
+                return acc[key]; // Return the next level of the nested object
+            }, modalFormData); // Start with the current modalFormData
+
+            // Safely set the value on the last key
+            nestedObject[lastKey] = value;
+
+            // Update the state with the new formData
+            setModalFormData({ ...modalFormData }); // Spread to trigger state update
+        } else {
+            // Handle non-nested properties
+            setModalFormData({ ...modalFormData, [name]: value });
+        }
+    }
 
     const handleAddTrain = async () => {
         const token = localStorage.getItem('token');
@@ -48,7 +86,7 @@ const AdminPage = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(modalFormData),
             });
 
             if (!response.ok) {
@@ -59,8 +97,7 @@ const AdminPage = () => {
 
             const newTrain = await response.json();
             setTrains([...trains, newTrain]);
-            setFormData({ id: '', name: '', seats: { '3ac': { price: '', count: '' }, '2ac': { price: '', count: '' }, '1ac': { price: '', count: '' } }, source: '', destination: '', date: '' });
-            toggleModal();
+            toggleModal(); // Close the modal after adding train, not resetting form data here
         } catch (error) {
             console.error('Failed to add train:', error.message);
         }
@@ -94,27 +131,11 @@ const AdminPage = () => {
                 train.id === trainData.id ? updatedTrain : train
             );
             setTrains(updatedTrains);
-            setFormData({ id: '', name: '', seats: { '3ac': { price: '', count: '' }, '2ac': { price: '', count: '' }, '1ac': { price: '', count: '' } }, source: '', destination: '', date: '' });
-            toggleModal();
+            toggleModal(); // Close the modal after updating train, not resetting form data here
         } catch (error) {
             console.error('Failed to update train:', error.message);
         }
     };
-
-    const handleEditTrain = async () => {
-        try {
-            const updatedTrain = await updateTrain(formData);
-            const updatedTrains = trains.map(train =>
-                train.id === formData.id ? updatedTrain : train
-            );
-            setTrains(updatedTrains);
-            setFormData({ id: '', name: '', seats: { '3ac': { price: '', count: '' }, '2ac': { price: '', count: '' }, '1ac': { price: '', count: '' } }, source: '', destination: '', date: '' });
-            toggleModal();
-        } catch (error) {
-            console.error('Failed to edit train:', error.message);
-        }
-    };
-
 
     const handleDeleteTrain = async (id) => {
         try {
@@ -151,17 +172,40 @@ const AdminPage = () => {
 
     const openEditModal = (train) => {
         console.log("Opening edit modal for train:", train); // Before opening edit modal
-        setFormData(train);
+        setModalFormData(train);
         toggleModal();
     };
+
+    // Pagination logic
+    const indexOfLastTrain = currentPage * trainsPerPage;
+    const indexOfFirstTrain = indexOfLastTrain - trainsPerPage;
+    const currentTrains = searchTerm ? filteredTrains.slice(indexOfFirstTrain, indexOfLastTrain) : trains.slice(indexOfFirstTrain, indexOfLastTrain);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <div className="container font-poppins mx-auto px-4 py-8">
             <h1 className="text-4xl font-semibold mb-4">Admin Dashboard - Manage Trains</h1>
+            <div className="flex items-center mb-4">
+                <input
+                    type="text"
+                    className="border border-gray-300 p-2 mr-2"
+                    placeholder="Search by train name..."
+                    value={searchTerm}
+                    onChange={handleChangeSearch}
+                />
+                <button
+                    className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+                    onClick={handleClearSearch}
+                >
+                    Clear
+                </button>
+            </div>
+
             <button
                 className="bg-blue-500 text-white py-2 px-4 rounded-lg mb-4 hover:bg-blue-700"
                 onClick={() => {
-                    setFormData({ id: '', name: '', seats: { '3ac': { price: '', count: '' }, '2ac': { price: '', count: '' }, '1ac': { price: '', count: '' } }, source: '', destination: '', date: '' });
+                    setModalFormData({ id: '', name: '', seats: { '3ac': { price: '', count: '' }, '2ac': { price: '', count: '' }, '1ac': { price: '', count: '' } }, source: '', destination: '', date: '' });
                     toggleModal();
                 }}
             >
@@ -181,7 +225,7 @@ const AdminPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {trains.map((train) => (
+                        {currentTrains.map((train) => (
                             <tr key={train.id}>
                                 <td className="py-2 px-4">{train.name}</td>
                                 <td className="py-2 px-4">
@@ -203,7 +247,7 @@ const AdminPage = () => {
                                     </button>
                                     <button
                                         className="bg-red-500 text-white py-1 px-2 rounded-lg hover:bg-red-700"
-                                        onClick={() => handleDeleteTrain(train._id)}
+                                        onClick={() => handleDeleteTrain(train.id)}
                                     >
                                         Delete
                                     </button>
@@ -214,141 +258,34 @@ const AdminPage = () => {
                 </table>
             </div>
 
-            {showModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                    <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-                        <h2 className="text-xl font-semibold mb-4">
-                            {formData.id ? 'Edit Train' : 'Add New Train'}
-                        </h2>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="col-span-2">
-                                <label className="block text-gray-700 mb-2">Train Name</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 mb-2">Price 3AC</label>
-                                <input
-                                    type="number"
-                                    name="3ac.price"
-                                    value={formData.seats['3ac'].price}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 mb-2">Seats 3AC</label>
-                                <input
-                                    type="number"
-                                    name="3ac.count"
-                                    value={formData.seats['3ac'].count}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 mb-2">Price 2AC</label>
-                                <input
-                                    type="number"
-                                    name="2ac.price"
-                                    value={formData.seats['2ac'].price}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 mb-2">Seats 2AC</label>
-                                <input
-                                    type="number"
-                                    name="2ac.count"
-                                    value={formData.seats['2ac'].count}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 mb-2">Price 1AC</label>
-                                <input
-                                    type="number"
-                                    name="1ac.price"
-                                    value={formData.seats['1ac'].price}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 mb-2">Seats 1AC</label>
-                                <input
-                                    type="number"
-                                    name="1ac.count"
-                                    value={formData.seats['1ac'].count}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                            <div className="col-span-2">
-                                <label className="block text-gray-700 mb-2">Source</label>
-                                <input
-                                    type="text"
-                                    name="source"
-                                    value={formData.source}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                            <div className="col-span-2">
-                                <label className="block text-gray-700 mb-2">Destination</label>
-                                <input
-                                    type="text"
-                                    name="destination"
-                                    value={formData.destination}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                            <div className="col-span-2">
-                                <label className="block text-gray-700 mb-2">Date</label>
-                                <input
-                                    type="date"
-                                    name="date"
-                                    value={formData.date}
-                                    onChange={handleChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="flex justify-end">
-                            <button
-                                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 mr-2"
-                                onClick={formData.id ? handleEditTrain : handleAddTrain}
-                            >
-                                {formData.id ? 'Update' : 'Add'}
-                            </button>
-                            <button
-                                className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-700"
-                                onClick={toggleModal}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
+            {/* Pagination */}
+            <div className="flex justify-center mt-4">
+                <div className="flex">
+                    <button
+                        onClick={() => paginate(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className={`bg-gray-200 text-gray-700 py-1 px-4 rounded-l-lg ${currentPage === 1 ? 'cursor-not-allowed' : 'hover:bg-gray-300'}`}
+                    >
+                        Prev
+                    </button>
+                    <button
+                        onClick={() => paginate(currentPage + 1)}
+                        disabled={searchTerm ? indexOfLastTrain >= filteredTrains.length : indexOfLastTrain >= trains.length}
+                        className={`bg-gray-200 text-gray-700 py-1 px-4 rounded-r-lg ml-1 ${searchTerm ? (indexOfLastTrain >= filteredTrains.length ? 'cursor-not-allowed' : 'hover:bg-gray-300') : (indexOfLastTrain >= trains.length ? 'cursor-not-allowed' : 'hover:bg-gray-300')}`}
+                    >
+                        Next
+                    </button>
                 </div>
-            )}
+            </div>
+
+            <TrainModal
+                showModal={showModal}
+                toggleModal={toggleModal}
+                formData={modalFormData}
+                handleChangeModal={handleChangeModal}
+                handleAddTrain={handleAddTrain}
+                updateTrain={updateTrain}
+            />
         </div>
     );
 };
